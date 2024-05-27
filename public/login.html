@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <div>
+            <h1>Login</h1>
+        </div>
+        <div>
+            <label for="">email</label>
+            <input type="text" id="" name="email">
+        </div>
+        <div>
+            <label for="">password</label>
+            <input type="text" id="" name="password">
+        </div>
+        <div>
+            <button>Login</button>
+        </div>
+    </form>
+    <script>
+        let form = document.querySelector('form')
+
+        form.addEventListener('submit', (e)=>{
+            e.preventDefault();
+
+            let email = form.email.value;
+            let password = form.password.value;
+
+            console.log(email, password);
+        })
+    </script>
+</body>
+</html>
