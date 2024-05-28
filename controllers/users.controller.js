@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const User = require('../model/user_model'); 
+const User = require('../models/user_model'); 
 const { compareSync } = require("bcryptjs");
 
 exports.getAllUsers = async (req, res)=>{
