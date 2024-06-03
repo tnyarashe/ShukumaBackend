@@ -6,9 +6,12 @@ const db = require('./config/db.config')
 const mongoose = require('mongoose')
 const userRoutes  = require('./routes/user.routes')
 const authRoutes  = require('./routes/auth.routes')
+const orderRoutes = require('./routes/orderRoutes')
+const order = require('./middleware/order.middleware')
 
 const path = require('path')
 const dotenv = require('dotenv');
+// const { default: cartRoutes } = require('./routes/cartRoutes')
 
 // Set up Global configuration access
 dotenv.config();
@@ -33,7 +36,7 @@ mongoose.connect(process.env.db_uri)
 
 app.use('/v1/users', userRoutes);
 app.use('/v1/auth', authRoutes)
-
+app.use('/api/order',orderRoutes)
 
 
 app.get('/', (req, res)=>{
@@ -54,6 +57,9 @@ app.get('/login', (req, res)=>{
     res.sendFile(path.join(__dirname,'public','login.html'))
 } )
 
+app.post('/order', order(order_model), (req,res) => {
+    res.status(200).send(req.body);
+});
 
 
 app.listen(process.env.PORT, ()=>{
