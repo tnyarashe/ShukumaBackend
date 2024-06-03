@@ -57,9 +57,9 @@ app.get('/login', (req, res)=>{
     res.sendFile(path.join(__dirname,'public','login.html'))
 } )
 
-app.post('/order', order(order_model), (req,res) => {
-    res.status(200).send(req.body);
-});
+// app.post('/order', order(order_model), (req,res) => {
+//     res.status(200).send(req.body);
+// });
 
 
 app.listen(process.env.PORT, ()=>{

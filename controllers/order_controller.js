@@ -1,5 +1,6 @@
-const Order = require('../models/order_model');
-const Cart = require('../models/order_model');
+const order = require('../models/order_model');
+const Cart = require('../models/cart_models');
+
 
 function generateOrderCode() {
   // Generate an order code

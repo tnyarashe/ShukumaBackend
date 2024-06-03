@@ -7,7 +7,7 @@ const { request } = require("express");
 request
 
 exports.signup  = async (req,res)=>{
-    const {email, password, roles} = req.body
+    const {email, password, roles} = req.body;
     
     try{
         if(!(email && password)){

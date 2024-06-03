@@ -1,7 +1,6 @@
 // Assuming you have the necessary dependencies and Mongoose connection established
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-// Define the cart schema
 const cartSchema = new mongoose.Schema({
     user: {
       type: mongoose.Schema.Types.ObjectId,

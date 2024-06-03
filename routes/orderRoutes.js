@@ -1,7 +1,5 @@
 const express = require('express');
 const order = require('../models/order_model');
-const order = require('../controllers/order_controller')
-const order = require('../middleware/order.middleware')
 
 const router = express.Router();
 

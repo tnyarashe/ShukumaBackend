@@ -1,5 +1,6 @@
 // Assuming you have the necessary dependencies and models imported
 const order = require('../models/order_model');
+const router = require('../routes/auth.routes');
 
 require ('dotenv')
 // Middleware to validate order data
@@ -14,10 +15,13 @@ const validateOrderData = async (req, res, next) => {
     }
   
     // Perform validation on the order data
-    // For example, check if required fields are present, validate product data, etc.
+    if(!items || !customerName || !address){
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
   
     // If the order data is valid, proceed to the next middleware
-    
+    next();    
   };
   
   // Middleware to authenticate the user
@@ -25,19 +29,20 @@ const validateOrderData = async (req, res, next) => {
     // Perform user authentication logic
     // For example, check if the user is logged in or has appropriate permissions
     if (!req.user)
+        return res.status(401).json({ error: 'Unauthorized' });
     // If the user is authenticated, proceed to the next middleware
     next();
   };
-  
   // POST /api/orders
   router.post('/orders', authenticateUser, validateOrderData, (req, res) => {
-    const { products, customerName, address } = req.body;
+    const { items, customerName, address } = req.body;
   
     // Create a new order with the provided data
     const order = new Order({
-      products,
+      items,
       customerName,
-      address
+      address,
+      user: req.user._id
     });
   
     // Save the order to the database
@@ -51,4 +56,4 @@ const validateOrderData = async (req, res, next) => {
       });
 });
 
-module.exports = order
+module.exports = order;
