@@ -36,7 +36,7 @@ mongoose.connect(process.env.db_uri)
 
 app.use('/v1/users', userRoutes);
 app.use('/v1/auth', authRoutes)
-app.use('/api/order',orderRoutes)
+app.use('/v1/order',orderRoutes)
 
 
 app.get('/', (req, res)=>{
