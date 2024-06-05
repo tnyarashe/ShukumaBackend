@@ -26,7 +26,6 @@ const validateOrderData = async (req, res, next) => {
   
   // Middleware to authenticate the user
   const authenticateUser = (req, res, next) => {
-    // Perform user authentication logic
     // For example, check if the user is logged in or has appropriate permissions
     if (!req.user)
         return res.status(401).json({ error: 'Unauthorized' });
@@ -34,7 +33,7 @@ const validateOrderData = async (req, res, next) => {
     next();
   };
   // POST /api/orders
-  router.post('/orders', authenticateUser, validateOrderData, (req, res) => {
+  router.post('/order', authenticateUser, validateOrderData, (req, res) => {
     const { items, customerName, address } = req.body;
   
     // Create a new order with the provided data

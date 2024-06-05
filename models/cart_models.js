@@ -22,7 +22,7 @@ const cartSchema = new mongoose.Schema({
   });
   
   // Define the Cart model
-  const Cart = mongoose.model('Cart', cartSchema);
+  const Cart = mongoose.model('cart', cartSchema);
   
   // Example functionality to add a product to the cart
   const addToCart = (userId, productId, quantity) => {

@@ -7,8 +7,7 @@ const mongoose = require('mongoose')
 const userRoutes  = require('./routes/user.routes')
 const authRoutes  = require('./routes/auth.routes')
 const orderRoutes = require('./routes/orderRoutes')
-const order = require('./middleware/order.middleware')
-
+const order_model = require('./models/order_model');
 const path = require('path')
 const dotenv = require('dotenv');
 // const { default: cartRoutes } = require('./routes/cartRoutes')
@@ -33,10 +32,12 @@ mongoose.connect(process.env.db_uri)
     })
 
 
+app.set('view engine,', 'ejs');
+app.set('views', path.join(__dirname, 'views'))
 
 app.use('/v1/users', userRoutes);
 app.use('/v1/auth', authRoutes)
-app.use('/v1/order',orderRoutes)
+app.use('/api/order',orderRoutes)
 
 
 app.get('/', (req, res)=>{
@@ -57,9 +58,10 @@ app.get('/login', (req, res)=>{
     res.sendFile(path.join(__dirname,'public','login.html'))
 } )
 
-// app.post('/order', order(order_model), (req,res) => {
-//     res.status(200).send(req.body);
-// });
+
+app.post('/order', order_model, (req, res) => {
+  res.status(200).send(req.body);
+});
 
 
 app.listen(process.env.PORT, ()=>{

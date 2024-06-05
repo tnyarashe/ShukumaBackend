@@ -1,5 +1,3 @@
-import { findById } from '../models/order_model';
-
 const cart = require('../models/cart_models')
 const user = require('../models/user_model')
 
@@ -48,7 +46,7 @@ const getCart = async (req,res) => {
 try{
   const userId = req.user._id; // Assuming you have the authenticated user stored in req.user
 
-  const user = await User.findById(userId).populate('cart.product');
+  const user = await user.findById(userId).populate('cart.product');
 
   if (!user) {
     return res.status(404).json({ error: 'User not found' });
