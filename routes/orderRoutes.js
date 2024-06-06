@@ -3,7 +3,7 @@ const order = require('../models/order_model');
 const router = express.Router();
 
 // GET /api/orders
-router.get('/order', (req, res) => {
+router.get('/orders', (req, res) => {
   Order.find()
     .then(orders => {
       res.json(orders);
@@ -14,7 +14,7 @@ router.get('/order', (req, res) => {
     });
 });
 
-router.get('/order:Id', (req, res) => {
+router.get('/orders/:Id', (req, res) => {
   const orderId = req.params.orderId;
 
   const order = {
@@ -23,8 +23,7 @@ router.get('/order:Id', (req, res) => {
   }
 })
 // POST /api/orders
-router.post('/order', (req, res) => {
-  // Access request body to create a new order
+router.post('/orders', (req, res) => {
   const { customerName, address, items, totalAmount, code } = req.body;
 
   // Create a new order using the Order model

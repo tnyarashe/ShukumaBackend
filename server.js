@@ -10,7 +10,7 @@ const orderRoutes = require('./routes/orderRoutes')
 const order_model = require('./models/order_model');
 const path = require('path')
 const dotenv = require('dotenv');
-// const { default: cartRoutes } = require('./routes/cartRoutes')
+const { default: cartRoutes } = require('./routes/cartRoutes')
 
 // Set up Global configuration access
 dotenv.config();
@@ -36,9 +36,9 @@ app.set('view engine,', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
 app.use('/v1/users', userRoutes);
-app.use('/v1/auth', authRoutes)
-app.use('/api/order',orderRoutes)
-
+app.use('/v1/auth ', authRoutes);
+app.use('/v1/orders',orderRoutes);
+app.use('/v1/cart', cartRoutes)
 
 app.get('/', (req, res)=>{
     res.send("Welcome to our API");
@@ -59,7 +59,7 @@ app.get('/login', (req, res)=>{
 } )
 
 
-app.post('/order', order_model, (req, res) => {
+app.post('/orders', order_model, (req, res) => {
   res.status(200).send(req.body);
 });
 
