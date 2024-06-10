@@ -11,6 +11,6 @@ router.post('/add', cartHandlers.addToCart);
 router.post('/remove:itemId', cartHandlers.removeFromCart);
 
 // GET /cart
-router.get('/ ',cartHandlers.getCart);
+router.get('/cart',cartHandlers.getCart);
 
 module.exports = router;
