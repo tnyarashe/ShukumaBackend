@@ -66,14 +66,14 @@ exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
 };
   
-  exports.user_dBoard = (req, res) => {
+exports.user_dBoard = (req, res) => {
     res.status(200).send("User Content.");
 };
   
-  exports.admin_dBoard = (req, res) => {
+exports.admin_dBoard = (req, res) => {
     res.status(200).send("Admin Content.");
 };
   
-  exports.moderatorBoard = (req, res) => {
+exports.moderatorBoard = (req, res) => {
     res.status(200).send("Moderator Content.");
 };

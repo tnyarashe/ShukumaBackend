@@ -2,6 +2,10 @@ const express = require('express');
 const order = require('../models/order_model');
 const router = express.Router();
 
+
+// router.post('/orders', order.placeOrder)
+
+
 // GET /api/orders
 router.get('/orders', (req, res) => {
   Order.find()

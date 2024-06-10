@@ -11,6 +11,8 @@ function generateOrderCode() {
   return `${prefix}-${randomPart}-${timestamp}`;
 }
 
+exports.get
+
 exports.placeOrder = async (req, res) => {
   const { cartId, userId } = req.body;
 
