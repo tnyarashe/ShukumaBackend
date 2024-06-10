@@ -18,13 +18,14 @@ const userSchema = mongoose.Schema({
         }],
         default: ['user']
     },
- address: {
-    street: { type: String },
-    city: { type: String },
-    state: { type: String },
-    country: { type: String },
-    postalCode: { type: String }
+    address: {
+        street: { type: String },
+        city: { type: String },
+        state: { type: String },
+        country: { type: String },
+        postalCode: { type: String }
   },
+  
   isDriver: { type: Boolean, default: false },
   isBusiness: { type: Boolean, default: false },
   vehicleType: { type: String },
