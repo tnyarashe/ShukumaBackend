@@ -48,14 +48,12 @@ exports.updateOne = async (req, res)=>{
 
         let updatedUser  = await User.findByIdAndUpdate(id, req.body)
 
-
         if(!updatedUser){
             return res.status(404).send({message:"Cannot get user with email : ", email}) 
         }
         await updatedUser.save()
 
         res.status(200).send({message: "Got user by email :", updatedUser})
-
 
     }catch(err){
         res.status(500).send({message:"Could not get the user", err})

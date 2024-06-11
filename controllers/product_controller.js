@@ -1,43 +1,63 @@
-const { default: mongoose } = require("mongoose");
 const Product = require('../models/product_model'); 
-const { compareSync } = require("bcryptjs");
 
-exports.getAllProducts = async (req, res)=>{
-    try{
-        productsAll = await Product.find()
-        if(!productsAll){
-            return res.status(400).send({message: "Failed to get all the prodcuts", productsAll})
-        }
-
-        res.status(200).send({message : "Managed to get all products", productsAll})
+exports.createProduct = async (req, res)=>{
+    try {
         
-    }catch(err){
-        res.status(500).send("Could not get all the products", err)
-    }
-}
-exports.getOneProduct = async (req, res)=>{
-    try{
-        const {productId} = req.body
-
-        console.log(productId)
-        if(!productId){
-            return res.status(400).send("Enter product ID") 
-        }
-
-        let product = await Product.findOne({productId})
+        const product = await Product(req.body)
 
         if(!product){
-            return res.status(400).send({message: "Cannot get product with ID : ", productId}) 
+           return  res.status(400).send({message: "Failed to create product"})
         }
+        await product.save()
 
-        res.status(200).send({message: "Got product by ID :", productId})
-
-
-    }catch(err){
-        res.status(500).send({message:"Could not get the product", err})
+        console.log(product)
+        res.status(200).send({message: "Successfully retrieved all products!", product})
+    } catch (error) {
+        res.status(500).send({message: "Cant find products, some error occured", err})
     }
 }
-// exports.updateOne = async (req, res)=>{
+// exports.getAllProducts = async (req, res)=>{
+//     try{
+//         productsAll = await Product.find()
+//         if(!productsAll){
+//             return res.status(400).send({message: "Failed to get all the prodcuts", productsAll})
+//         }
+
+// exports.createProduct = async (req, res) => {
+//     try {
+//         const (id)
+//     }
+// }
+
+//         res.status(200).send({message : "Managed to get all products", productsAll})
+        
+//     }catch(err){
+//         res.status(500).send("Could not get all the products", err)
+//     }
+// }
+// exports.getOneProduct = async (req, res)=>{
+//     try{
+//         const {productId} = req.body
+
+//         console.log(productId)
+//         if(!productId){
+//             return res.status(400).send("Enter product ID") 
+//         }
+
+//         let product = await Product.findOne({productId})
+
+//         if(!product){
+//             return res.status(400).send({message: "Cannot get product with ID : ", productId}) 
+//         }
+
+//         res.status(200).send({message: "Got product by ID :", productId})
+
+
+//     }catch(err){
+//         res.status(500).send({message:"Could not get the product", err})
+//     }
+// }
+// exports.updateOneProduct = async (req, res)=>{
 //     try{
 //         const id = req.params.id
 
@@ -46,22 +66,19 @@ exports.getOneProduct = async (req, res)=>{
 //             return res.status(400).send("Enter product ID") 
 //         }
 
-//         let updateOneProduct  = await User.findByIdAndUpdate(id, req.body)
+//         let updatedProduct  = await Product.findByIdAndUpdate(id, req.body)
 
-
-//         if(!updatedUser){
-//             return res.status(404).send({message:"Cannot get user with email : ", email}) 
+//         if(!updatedProduct){
+//             return res.status(404).send({message:"Cannot get product with ID : ", productId}) 
 //         }
-//         await updatedUser.save()
+//         await updatedProduct.save()
 
-//         res.status(200).send({message: "Got user by email :", updatedUser})
-
+//         res.status(200).send({message: "Got product by ID: ", updatedProduct})
 
 //     }catch(err){
-//         res.status(500).send({message:"Could not get the user", err})
+//         res.status(500).send({message:"Could not get the product", err})
 //     }
 // }
-
 // exports.allAccess = (req, res) => {
 //     res.status(200).send("Public Content.");
 // };
