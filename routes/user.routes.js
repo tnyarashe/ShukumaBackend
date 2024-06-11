@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const path =  require('path')
-const user = require('../controllers/users.controller')
+const user = require('../controllers/users_controller')
 const auth = require('../middleware/auth.middleware')
 
 router.get('/all', user.getAllUsers)
