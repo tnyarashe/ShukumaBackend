@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const product = require('../controllers/product_controller')
+const products = require('../controllers/product_controller')
 
-router.post('/create', product.createProduct)
-router.get('/products', product.getAllProducts)
+router.post('/products', products.createProduct)
+router.get('/products', products.getAllProducts)
+router.get('/products', products.getOneProduct)
 
 // router.get('/all', product.getAllProducts)
 // router.get('/product', product.getOneProduct)

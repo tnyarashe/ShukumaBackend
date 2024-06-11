@@ -33,28 +33,23 @@ exports.getAllProducts = async (req, res)=>{
         res.status(500).send({message: "Cant find products, some error occured", err})
     }
 } 
-// exports.getOneProduct = async (req, res)=>{
-//     try{
-//         const {productId} = req.body
+exports.getOneProduct = async (req, res)=>{
+    try {
 
-//         console.log(productId)
-//         if(!productId){
-//             return res.status(400).send("Enter product ID") 
-//         }
+        const {id} = req.param
 
-//         let product = await Product.findOne({productId})
+        const product = await Product.findOne(id)
 
-//         if(!product){
-//             return res.status(400).send({message: "Cannot get product with ID : ", productId}) 
-//         }
-
-//         res.status(200).send({message: "Got product by ID :", productId})
-
-
-//     }catch(err){
-//         res.status(500).send({message:"Could not get the product", err})
-//     }
-// }
+        if(!product){
+           return  res.status(400).send({message: "Failed to find product"})
+        }
+        console.log(product)
+        
+        res.status(200).send({message: "Successfully retrieved ", product})
+    } catch (error) {
+        res.status(500).send({message: "Cant find product, some error occured", err})
+    }
+} 
 // exports.updateOneProduct = async (req, res)=>{
 //     try{
 //         const id = req.params.id
