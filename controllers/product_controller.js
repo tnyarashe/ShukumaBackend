@@ -27,10 +27,10 @@ exports.getOne = async (req, res)=>{
         let product = await Product.findOne({productId})
 
         if(!productId){
-            return res.status(400).send({message:"Cannot get user with email : ", email}) 
+            return res.status(400).send({message: "Cannot get product with ID : ", product}) 
         }
 
-        res.status(200).send({message: "Got user by email :", email})
+        res.status(200).send({message: "Got product by ID :", email})
 
 
     }catch(err){
