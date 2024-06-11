@@ -37,7 +37,7 @@ exports.getOneProduct = async (req, res)=>{
         res.status(500).send({message:"Could not get the product", err})
     }
 }
-exports.updateOne = async (req, res)=>{
+exports.updateOneProduct = async (req, res)=>{
     try{
         const id = req.params.id
 
@@ -59,7 +59,6 @@ exports.updateOne = async (req, res)=>{
         res.status(500).send({message:"Could not get the product", err})
     }
 }
-
 // exports.allAccess = (req, res) => {
 //     res.status(200).send("Public Content.");
 // };
