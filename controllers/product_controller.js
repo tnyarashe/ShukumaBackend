@@ -49,7 +49,7 @@ exports.updateOneProduct = async (req, res)=>{
         let updatedProduct  = await Product.findByIdAndUpdate(id, req.body)
 
         if(!updatedProduct){
-            return res.status(404).send({message:"Cannot get product with ID : ", email}) 
+            return res.status(404).send({message:"Cannot get product with ID : ", productId}) 
         }
         await updatedProduct.save()
 
