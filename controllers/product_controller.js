@@ -11,30 +11,28 @@ exports.createProduct = async (req, res)=>{
         await product.save()
 
         console.log(product)
+
         res.status(200).send({message: "Successfully retrieved all products!", product})
     } catch (error) {
         res.status(500).send({message: "Cant find products, some error occured", err})
     }
 }
-// exports.getAllProducts = async (req, res)=>{
-//     try{
-//         productsAll = await Product.find()
-//         if(!productsAll){
-//             return res.status(400).send({message: "Failed to get all the prodcuts", productsAll})
-//         }
 
-// exports.createProduct = async (req, res) => {
-//     try {
-//         const (id)
-//     }
-// }
+exports.getAllProducts = async (req, res)=>{
+    try {
+        const products = await Product.find()
 
-//         res.status(200).send({message : "Managed to get all products", productsAll})
-        
-//     }catch(err){
-//         res.status(500).send("Could not get all the products", err)
-//     }
-// }
+        if(!products){
+           return  res.status(400).send({message: "Failed to get products"})
+        }
+
+        console.log(products)
+
+        res.status(200).send({message: "Successfully retrieved all products!", products})
+    } catch (error) {
+        res.status(500).send({message: "Cant find products, some error occured", err})
+    }
+} 
 // exports.getOneProduct = async (req, res)=>{
 //     try{
 //         const {productId} = req.body

@@ -38,7 +38,7 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.use('/v1/users', userRoutes);
 app.use('/v1/auth ', authRoutes);
-app.use('/v1/product', productRoutes)
+app.use('/v1/products', productRoutes);
 // app.use('/v1/orders',orderRoutes);
 // app.use('/v1/cart', cartRoutes)
 
