@@ -15,11 +15,10 @@ const productSchema = mongoose.Schema({
             required: true
         },
 
-        imageUrl: {
+        image: {
             type: String,
             required: true
         }
 })
-
-const product = mongoose.model('product', productSchema)
-module.exports = product
+const Product = mongoose.model('product', productSchema)
+module.exports = Product
