@@ -37,30 +37,28 @@ exports.getOneProduct = async (req, res)=>{
         res.status(500).send({message:"Could not get the product", err})
     }
 }
-// exports.updateOne = async (req, res)=>{
-//     try{
-//         const id = req.params.id
+exports.updateOne = async (req, res)=>{
+    try{
+        const id = req.params.id
 
-//         console.log(id)
-//         if(!id){
-//             return res.status(400).send("Enter product ID") 
-//         }
+        console.log(id)
+        if(!id){
+            return res.status(400).send("Enter product ID") 
+        }
 
-//         let updateOneProduct  = await User.findByIdAndUpdate(id, req.body)
+        let updatedProduct  = await Product.findByIdAndUpdate(id, req.body)
 
+        if(!updatedProduct){
+            return res.status(404).send({message:"Cannot get product with ID : ", email}) 
+        }
+        await updatedProduct.save()
 
-//         if(!updatedUser){
-//             return res.status(404).send({message:"Cannot get user with email : ", email}) 
-//         }
-//         await updatedUser.save()
+        res.status(200).send({message: "Got product by ID: ", updatedProduct})
 
-//         res.status(200).send({message: "Got user by email :", updatedUser})
-
-
-//     }catch(err){
-//         res.status(500).send({message:"Could not get the user", err})
-//     }
-// }
+    }catch(err){
+        res.status(500).send({message:"Could not get the product", err})
+    }
+}
 
 // exports.allAccess = (req, res) => {
 //     res.status(200).send("Public Content.");
