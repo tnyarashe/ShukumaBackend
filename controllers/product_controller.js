@@ -15,7 +15,7 @@ exports.getAllProducts = async (req, res)=>{
         res.status(500).send("Could not get all the products", err)
     }
 }
-exports.getOne = async (req, res)=>{
+exports.getOneProduct = async (req, res)=>{
     try{
         const {productId} = req.body
 
@@ -26,15 +26,15 @@ exports.getOne = async (req, res)=>{
 
         let product = await Product.findOne({productId})
 
-        if(!productId){
-            return res.status(400).send({message: "Cannot get product with ID : ", product}) 
+        if(!product){
+            return res.status(400).send({message: "Cannot get product with ID : ", productId}) 
         }
 
-        res.status(200).send({message: "Got product by ID :", email})
+        res.status(200).send({message: "Got product by ID :", productId})
 
 
     }catch(err){
-        res.status(500).send({message:"Could not get the user", err})
+        res.status(500).send({message:"Could not get the product", err})
     }
 }
 // exports.updateOne = async (req, res)=>{

@@ -27,14 +27,14 @@ exports.getOne = async (req, res)=>{
         let user  = await User.findOne({email})
 
         if(!user){
-            return res.status(400).send({message:"Cannot get user with email : ", email}) 
+            return res.status(400).send({message: "Cannot get user with email : ", email}) 
         }
 
         res.status(200).send({message: "Got user by email :", email})
 
 
     }catch(err){
-        res.status(500).send({message:"Could not get the user", err})
+        res.status(500).send({message: "Could not get the user", err})
     }
 }
 exports.updateOne = async (req, res)=>{
