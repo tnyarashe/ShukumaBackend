@@ -1,64 +1,84 @@
-const { default: mongoose } = require("mongoose");
 const Product = require('../models/product_model'); 
-const { compareSync } = require("bcryptjs");
 
-exports.getAllProducts = async (req, res)=>{
-    try{
-        productsAll = await Product.find()
-        if(!productsAll){
-            return res.status(400).send({message: "Failed to get all the prodcuts", productsAll})
-        }
-
-        res.status(200).send({message : "Managed to get all products", productsAll})
+exports.createProduct = async (req, res)=>{
+    try {
         
-    }catch(err){
-        res.status(500).send("Could not get all the products", err)
-    }
-}
-exports.getOneProduct = async (req, res)=>{
-    try{
-        const {productId} = req.body
-
-        console.log(productId)
-        if(!productId){
-            return res.status(400).send("Enter product ID") 
-        }
-
-        let product = await Product.findOne({productId})
+        const product = await Product(req.body)
 
         if(!product){
-            return res.status(400).send({message: "Cannot get product with ID : ", productId}) 
+           return  res.status(400).send({message: "Failed to create product"})
         }
+        await product.save()
 
-        res.status(200).send({message: "Got product by ID :", productId})
-
-
-    }catch(err){
-        res.status(500).send({message:"Could not get the product", err})
+        console.log(product)
+        res.status(200).send({message: "Successfully retrieved all products!", product})
+    } catch (error) {
+        res.status(500).send({message: "Cant find products, some error occured", err})
     }
 }
-exports.updateOneProduct = async (req, res)=>{
-    try{
-        const id = req.params.id
+// exports.getAllProducts = async (req, res)=>{
+//     try{
+//         productsAll = await Product.find()
+//         if(!productsAll){
+//             return res.status(400).send({message: "Failed to get all the prodcuts", productsAll})
+//         }
 
-        console.log(id)
-        if(!id){
-            return res.status(400).send("Enter product ID") 
-        }
+// exports.createProduct = async (req, res) => {
+//     try {
+//         const (id)
+//     }
+// }
 
-        let updatedProduct  = await Product.findByIdAndUpdate(id, req.body)
+//         res.status(200).send({message : "Managed to get all products", productsAll})
+        
+//     }catch(err){
+//         res.status(500).send("Could not get all the products", err)
+//     }
+// }
+// exports.getOneProduct = async (req, res)=>{
+//     try{
+//         const {productId} = req.body
 
-        if(!updatedProduct){
-            return res.status(404).send({message:"Cannot get product with ID : ", productId}) 
-        }
-        await updatedProduct.save()
+//         console.log(productId)
+//         if(!productId){
+//             return res.status(400).send("Enter product ID") 
+//         }
 
-        res.status(200).send({message: "Got product by ID: ", updatedProduct})
+//         let product = await Product.findOne({productId})
 
-    }catch(err){
-        res.status(500).send({message:"Could not get the product", err})
-    }
-}
+//         if(!product){
+//             return res.status(400).send({message: "Cannot get product with ID : ", productId}) 
+//         }
+
+//         res.status(200).send({message: "Got product by ID :", productId})
+
+
+//     }catch(err){
+//         res.status(500).send({message:"Could not get the product", err})
+//     }
+// }
+// exports.updateOneProduct = async (req, res)=>{
+//     try{
+//         const id = req.params.id
+
+//         console.log(id)
+//         if(!id){
+//             return res.status(400).send("Enter product ID") 
+//         }
+
+//         let updatedProduct  = await Product.findByIdAndUpdate(id, req.body)
+
+//         if(!updatedProduct){
+//             return res.status(404).send({message:"Cannot get product with ID : ", productId}) 
+//         }
+//         await updatedProduct.save()
+
+//         res.status(200).send({message: "Got product by ID: ", updatedProduct})
+
+//     }catch(err){
+//         res.status(500).send({message:"Could not get the product", err})
+//     }
+// }
 // exports.allAccess = (req, res) => {
 //     res.status(200).send("Public Content.");
 // };
