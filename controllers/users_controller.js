@@ -20,7 +20,7 @@ exports.getOne = async (req, res)=>{
         const {email} = req.body
 
         console.log(email)
-        
+
         if(!email){
             return res.status(400).send("Enter email") 
         }
@@ -34,8 +34,8 @@ exports.getOne = async (req, res)=>{
         res.status(200).send({message: "Got user by email :", email})
 
 
-    }catch(err){
-        res.status(500).send({message: "Could not get the user", err})
+    }   catch(err){
+            res.status(500).send({message: "Could not get the user", err})
     }
 }
 exports.updateOne = async (req, res)=>{
