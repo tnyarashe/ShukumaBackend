@@ -13,6 +13,7 @@ exports.createProduct = async (req, res)=>{
         console.log(product)
 
         res.status(200).send({message: "Successfully retrieved all products!", product})
+
     } catch (error) {
         res.status(500).send({message: "Cant find products, some error occured", err})
     }
@@ -29,25 +30,30 @@ exports.getAllProducts = async (req, res)=>{
         console.log(products)
 
         res.status(200).send({message: "Successfully retrieved all products!", products})
+
     } catch (error) {
         res.status(500).send({message: "Cant find products, some error occured", err})
     }
-} 
+}
+
 exports.getOneProduct = async (req, res)=>{
     try {
+        const {id} = req.params.id
 
-        const {id} = req.param
+        if(!{id}){
+            return res.status(400).send("The product ID does not exist.")
+        }
 
         const product = await Product.findOne(id)
 
         if(!product){
-           return  res.status(400).send({message: "Failed to find product"})
+            return  res.status(400).send({message: "Failed to find product"})
         }
-        console.log(product)
         
         res.status(200).send({message: "Successfully retrieved ", product})
-    } catch (error) {
-        res.status(500).send({message: "Cant find product, some error occured", err})
+
+    }   catch (error) {
+            res.status(500).send({message: "Cant find product, some error occured", error})
     }
 } 
 // exports.updateOneProduct = async (req, res)=>{

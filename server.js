@@ -38,7 +38,7 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.use('/v1/users', userRoutes);
 app.use('/v1/auth ', authRoutes);
-app.use('/v1/products', productRoutes);
+app.use('/v1/product', productRoutes);
 // app.use('/v1/orders',orderRoutes);
 // app.use('/v1/cart', cartRoutes)
 
@@ -58,12 +58,6 @@ app.get('/signup', (req, res)=>{
 app.get('/login', (req, res)=>{
     res.sendFile(path.join(__dirname,'public','login.html'))
 } )
-
-
-// // app.post('/orders', order_model, (req, res) => {
-//   res.status(200).send(req.body);
-// });
-
 
 app.listen(process.env.PORT, ()=>{
     console.log("Listening @ port:", process.env.PORT)
