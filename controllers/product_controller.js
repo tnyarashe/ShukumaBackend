@@ -32,11 +32,12 @@ exports.getAllProducts = async (req, res)=>{
     } catch (error) {
         res.status(500).send({message: "Cant find products, some error occured", err})
     }
-} 
+}
+
 exports.getOneProduct = async (req, res)=>{
     try {
 
-        const {id} = req.param
+        const {id} = req.body
 
         const product = await Product.findOne(id)
 
@@ -46,6 +47,7 @@ exports.getOneProduct = async (req, res)=>{
         console.log(product)
         
         res.status(200).send({message: "Successfully retrieved ", product})
+
     } catch (error) {
         res.status(500).send({message: "Cant find product, some error occured", err})
     }
