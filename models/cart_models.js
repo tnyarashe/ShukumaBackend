@@ -17,8 +17,8 @@
 //         default: 1
 //       }
 //     }]
-//   });
+//   })
   
-// // Define the Cart model
+// Define the Cart model
 // const Cart = mongoose.model('cart', cartSchema);
 // module.exports = Cart

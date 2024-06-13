@@ -6,16 +6,15 @@ exports.createProduct = async (req, res)=>{
         const product = await Product(req.body)
 
         if(!product){
-           return  res.status(400).send({message: "Failed to create product"})
+           return  res.status(400).send({message: "Please enter proper data"})
         }
+
         await product.save()
 
-        console.log(product)
-
-        res.status(200).send({message: "Successfully retrieved all products!", product})
+        res.status(200).send({message: "Product created successfully!", product})
 
     } catch (error) {
-        res.status(500).send({message: "Cant find products, some error occured", err})
+        res.status(500).send({message: "Cant create product, some error occured", error})
     }
 }
 
@@ -23,16 +22,10 @@ exports.getAllProducts = async (req, res)=>{
     try {
         const products = await Product.find()
 
-        if(!products){
-           return  res.status(400).send({message: "Failed to get products"})
-        }
-
-        console.log(products)
-
         res.status(200).send({message: "Successfully retrieved all products!", products})
 
     } catch (error) {
-        res.status(500).send({message: "Cant find products, some error occured", err})
+        res.status(500).send({message: "Cant find products, some error occured", error})
     }
 }
 
@@ -41,43 +34,56 @@ exports.getOneProduct = async (req, res)=>{
         const {id} = req.params.id
 
         if(!{id}){
-            return res.status(400).send("The product ID does not exist.")
+            return res.status(400).send("Please enter proper product ID.")
         }
 
         const product = await Product.findOne(id)
 
-        if(!product){
-            return  res.status(400).send({message: "Failed to find product"})
-        }
-        
         res.status(200).send({message: "Successfully retrieved ", product})
 
     }   catch (error) {
-            res.status(500).send({message: "Cant find product, some error occured", error})
+            res.status(500).send({message: "Can't find product, some error occured", error})
     }
-} 
-// exports.updateOneProduct = async (req, res)=>{
-//     try{
-//         const id = req.params.id
+}
 
-//         console.log(id)
-//         if(!id){
-//             return res.status(400).send("Enter product ID") 
-//         }
+exports.updateProduct = async (req, res)=>{
+    try{
+        const {id} = req.params.id
 
-//         let updatedProduct  = await Product.findByIdAndUpdate(id, req.body)
+        if(!{id}){
+            return res.status(400).send("Please enter proper ID") // change message
+        }
 
-//         if(!updatedProduct){
-//             return res.status(404).send({message:"Cannot get product with ID : ", productId}) 
-//         }
-//         await updatedProduct.save()
+        const updatedProduct = await Product.findByIdAndUpdate(id, req.body)
 
-//         res.status(200).send({message: "Got product by ID: ", updatedProduct})
+        await updatedProduct.save()
 
-//     }catch(err){
-//         res.status(500).send({message:"Could not get the product", err})
-//     }
-// }
+        res.status(200).send({message: "Product updated successfully ", updatedProduct}) // change message
+
+    } catch(error){
+        res.status(500).send({message:"Could not update product, some error occured", error}) // change message
+    }
+}
+
+exports.deleteProduct = async (req, res)=>{
+    try{
+        const id = req.params.id
+
+        if(!id){
+            return res.status(400).send("Please enter proper product ID.")
+        }
+
+        const product = await Product.findByIdAndDelete(id)
+
+        res.status(200).send({message: "Successfully deleted ", product})
+
+
+    } catch (error) {
+        res.status(500).send({message: "Can't find product, some error occured", error})
+    }
+}
+
+
 // exports.allAccess = (req, res) => {
 //     res.status(200).send("Public Content.");
 // };
