@@ -10,7 +10,7 @@ const orderRoutes = require('./routes/orderRoutes')
 const order_model = require('./models/order_model');
 const path = require('path')
 const dotenv = require('dotenv');
-const { default: cartRoutes } = require('./routes/cartRoutes')
+const cartRoutes  = require('./routes/cartRoutes')
 
 // Set up Global configuration access
 dotenv.config();
