@@ -68,14 +68,8 @@ exports.updateProduct = async (req, res)=>{
 
         const id = req.params.id
 
-        // if(!id){
-        //     return res.status(400).send("Please enter proper data") 
-        // }
-
-        const updatedProduct = await Product.findByIdAndUpdate(id, req.body)
-
-        console.log(updatedProduct)
-
+        const updatedProduct = await Product.findByIdAndUpdate(id,req.body);
+        
         if(!updatedProduct){
             return res.status(400).send("Please enter proper data")
         }
@@ -88,6 +82,10 @@ exports.updateProduct = async (req, res)=>{
         res.status(500).send({message:"Could not update product, some error occured", error})
     }
 }
+
+// exports.deleteAllProducts = async (req, res)=>{
+
+// }
 
 // exports.allAccess = (req, res) => {
 //     res.status(200).send("Public Content.");

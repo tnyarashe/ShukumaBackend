@@ -7,5 +7,4 @@ const auth = require('../middleware/auth.middleware')
 router.post('/register',user.signup)
 router.post('/signin', user.login)
 
-
 module.exports = router
