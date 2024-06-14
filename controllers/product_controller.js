@@ -68,7 +68,7 @@ exports.updateProduct = async (req, res)=>{
 
         const id = req.params.id
 
-        const updatedProduct = await Product.findByIdAndUpdate(id,req.body);
+        const updatedProduct = await Product.findByIdAndUpdate(id, req.body);
         
         if(!updatedProduct){
             return res.status(400).send("Please enter proper data")
@@ -83,9 +83,16 @@ exports.updateProduct = async (req, res)=>{
     }
 }
 
-// exports.deleteAllProducts = async (req, res)=>{
+exports.deleteAllProducts = async (req, res)=>{
+    try{
+        const product = await Product.deleteMany()
 
-// }
+        res.status(200).send({message: "Products successfully deleted!"})
+
+    } catch (error) {
+        res.status(500).send({message: "Cannot delete products, some error occured", error})
+    }
+}
 
 // exports.allAccess = (req, res) => {
 //     res.status(200).send("Public Content.");

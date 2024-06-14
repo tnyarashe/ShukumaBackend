@@ -10,15 +10,13 @@ const productRoutes = require('./routes/product.routes')
 // const orderRoutes = require('./routes/orderRoutes')
 // const order_model = require('./models/order_model');
 const path = require('path')
-<<<<<<< HEAD
-const dotenv = require('dotenv');
-const cartRoutes  = require('./routes/cartRoutes')
-=======
 const dotenv = require('dotenv')
+const cartRoutes  = require('./routes/cartRoutes')
+
 // const { default: cartRoutes } = require('./routes/cartRoutes')
->>>>>>> ba2c3e9f79672a651426b859bd1c8d9fe7c1a49c
 
 // Set up Global configuration access
+
 dotenv.config()
 
 app.use(cors())
