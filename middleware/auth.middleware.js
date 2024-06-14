@@ -3,10 +3,6 @@ const User = require('../models/user_model');
 
 require('dotenv')
 
-
-
-
-
 let verifyToken = async (req, res, next)=>{
 
     let token = req.headers["x-access-token"];

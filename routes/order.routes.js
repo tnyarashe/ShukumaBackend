@@ -2,6 +2,13 @@ const express = require('express');
 const order = require('../models/order_model');
 const router = express.Router();
 
+
+// router.post('/orders', order.placeOrder)
+
+router.get('/add',  order.createOrder)
+router.get('all', order.getAllOrders)
+
+
 // GET /api/orders
 router.get('/orders', (req, res) => {
   Order.find()
