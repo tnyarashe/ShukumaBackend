@@ -14,7 +14,7 @@ exports.createProduct = async (req, res)=>{
         res.status(200).send({message: "Product created successfully!", product})
 
     } catch (error) {
-        res.status(500).send({message: "Cant create product, some error occured", error})
+        res.status(500).send({message: "Can't create product, some error occured", error})
     }
 }
 
@@ -25,7 +25,7 @@ exports.getAllProducts = async (req, res)=>{
         res.status(200).send({message: "Successfully retrieved all products!", products})
 
     } catch (error) {
-        res.status(500).send({message: "Cant find products, some error occured", error})
+        res.status(500).send({message: "Can't find products, some error occured", error})
     }
 }
 
@@ -39,29 +39,10 @@ exports.getOneProduct = async (req, res)=>{
 
         const product = await Product.findOne(id)
 
-        res.status(200).send({message: "Successfully retrieved ", product})
+        res.status(200).send({message: "Product successfully retrieved ", product})
 
     }   catch (error) {
             res.status(500).send({message: "Can't find product, some error occured", error})
-    }
-}
-
-exports.updateProduct = async (req, res)=>{
-    try{
-        const {id} = req.params.id
-
-        if(!{id}){
-            return res.status(400).send("Please enter proper ID") // change message
-        }
-
-        const updatedProduct = await Product.findByIdAndUpdate(id, req.body)
-
-        await updatedProduct.save()
-
-        res.status(200).send({message: "Product updated successfully ", updatedProduct}) // change message
-
-    } catch(error){
-        res.status(500).send({message:"Could not update product, some error occured", error}) // change message
     }
 }
 
@@ -70,19 +51,43 @@ exports.deleteProduct = async (req, res)=>{
         const id = req.params.id
 
         if(!id){
-            return res.status(400).send("Please enter proper product ID.")
+            return res.status(400).send("Please enter proper data.")
         }
 
         const product = await Product.findByIdAndDelete(id)
 
-        res.status(200).send({message: "Successfully deleted ", product})
-
+        res.status(200).send({message: "Product successfully deleted!"})
 
     } catch (error) {
         res.status(500).send({message: "Can't find product, some error occured", error})
     }
 }
 
+exports.updateProduct = async (req, res)=>{
+    try{
+
+        const id = req.params.id
+
+        // if(!id){
+        //     return res.status(400).send("Please enter proper data") 
+        // }
+
+        const updatedProduct = await Product.findByIdAndUpdate(id, req.body)
+
+        console.log(updatedProduct)
+
+        if(!updatedProduct){
+            return res.status(400).send("Please enter proper data")
+        }
+
+        await updatedProduct.save()
+
+        res.status(200).send({message: "Product updated successfully ", updatedProduct})
+
+    } catch(error){
+        res.status(500).send({message:"Could not update product, some error occured", error})
+    }
+}
 
 // exports.allAccess = (req, res) => {
 //     res.status(200).send("Public Content.");

@@ -14,10 +14,11 @@ const productSchema = mongoose.Schema({
             type: Number,
             required: true
         },
-        category: {
-            type: String,
-            required: true
-        }
+
+        // category: {
+        //     type: String,
+        //     required: true
+        // },
 
         // imageUrl: {
         //     type: String,
