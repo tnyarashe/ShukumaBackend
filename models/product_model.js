@@ -15,15 +15,15 @@ const productSchema = mongoose.Schema({
             required: true
         },
 
-        // category: {
-        //     type: String,
-        //     required: true
-        // },
+        category: {
+            type: String,
+            required: true
+        },
 
-        // imageUrl: {
-        //     type: String,
-        //     required: true
-        // }
+        imageUrl: {
+            type: String,
+            required: true
+        }
 })
 
 productSchema.method("toJSON", function() {
