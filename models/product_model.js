@@ -23,6 +23,11 @@ const productSchema = mongoose.Schema({
         imageUrl: {
             type: String,
             required: true
+        },
+
+        businessName: {
+            type: String,
+            required: true
         }
 })
 
