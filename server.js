@@ -65,3 +65,5 @@ app.get('/login', (req, res)=>{
 app.listen(process.env.PORT, ()=>{
     console.log("Listening @ port:", process.env.PORT)
 })
+
+mongodb+srv://3tnyarashe:ShukumaDB@shukumadb.ccfdzls.mongodb.net/
