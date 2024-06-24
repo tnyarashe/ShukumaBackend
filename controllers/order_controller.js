@@ -81,12 +81,21 @@ exports.getAllOrders = async (req, res) =>{
         const orders = await Order.find();
         res.status(200).json(orders);
     }catch(error){
-
-    }
-}
+        res.status(500).json({error:"An error occured while fetching orders"});
+    };
+};
 exports.createOrder = async (req, res) =>{
     try{
+       const { user, total, items} = req.body;
+    
+       const Order = new Order({
+        user,
+        total,
+        items,
+       });
 
+       const newOrder = await Order.save();
+       res.status(201).json(newOrder);
     }catch{
 
     }
