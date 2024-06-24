@@ -75,5 +75,58 @@
 const {default: mongoose}  = require('mongoose');
 const Order = require('../models/order_model');
 
+// Get 
+exports.getAllOrders = async (req, res) =>{
+    try{
+        const orders = await Order.find();
+        res.status(200).json(orders);
+    }catch(error){
 
-exports.
+    }
+}
+exports.createOrder = async (req, res) =>{
+    try{
+
+    }catch{
+
+    }
+}
+exports.getOrderById = async (req,res) =>{
+    try{
+
+    }catch{
+
+    }
+}
+exports.getOneOrder = async (req, res) =>{
+    try{
+
+    }catch{
+
+    }
+}
+
+// Update
+exports.updateOrder = async (req, res) => {
+    try{
+
+    }catch{
+
+    }
+}
+
+// Delete
+exports.deleteOrder = async (req,res) =>{
+    try{
+
+    }catch{
+
+    }
+}
+exports.deleteAllOrders = async (req,res) =>{
+    try{
+
+    }catch{
+
+    }
+}
