@@ -30,6 +30,11 @@ const productSchema = mongoose.Schema({
             required: true
         },
 
+        rating: {
+        type: Number,
+        required: true
+        },
+
         imageUrl: {
             type: String,
             required: true
@@ -48,4 +53,5 @@ productSchema.method("toJSON", function() {
   })
 
 const Product = mongoose.model('product', productSchema)
+
 module.exports = Product
