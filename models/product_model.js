@@ -25,14 +25,9 @@ const productSchema = mongoose.Schema({
             required: true
         },
 
-        currency: {
-            type: String,
-            required: true
-        },
-
         rating: {
-        type: Number,
-        required: true
+            type: Number,
+            required: true
         },
 
         imageUrl: {
@@ -40,7 +35,7 @@ const productSchema = mongoose.Schema({
             required: true
         },
 
-        businessName: {
+        businessId: {
             type: String,
             required: true
         }
