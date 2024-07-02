@@ -1,7 +1,7 @@
 const express = require('express')
 const app  =  express()
 const cors = require("cors")
-
+const fileUpload = require('express-fileupload')
 const db = require('./config/db.config')
 const mongoose = require('mongoose')
 const businessRoutes  = require('./routes/business.routes')
@@ -13,6 +13,7 @@ const productRoutes = require('./routes/product.routes')
 const path = require('path')
 const dotenv = require('dotenv')
 const cartRoutes  = require('./routes/cartRoutes')
+const { request } = require('http')
 
 // const { default: cartRoutes } = require('./routes/cartRoutes')
 
@@ -24,8 +25,8 @@ app.use(cors())
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+app.use(fileUpload())
 
-app.use(express.static('public'))
 
 mongoose.connect(process.env.db_uri)
     .then(()=>{
@@ -37,11 +38,9 @@ mongoose.connect(process.env.db_uri)
     })
 
 
-// app.set('view engine,', 'ejs');
-// app.set('views', path.join(__dirname, 'views'))
 
 app.use('/v1/users', userRoutes)
-app.use('/v1/auth ', authRoutes)
+app.use('/v1/auth', authRoutes)
 app.use('/v1/product', productRoutes)
 app.use('/v1/business', businessRoutes)
 
@@ -51,19 +50,7 @@ app.use('/v1/business', businessRoutes)
 app.get('/', (req, res)=>{
     res.send("Welcome to our API");
 })
-app.get('/home', (req, res)=>{
-    res.send("Hello World.")
-})
 
-//Render the signup page
-app.get('/signup', (req, res)=>{
-    res.sendFile(path.join(__dirname,'public','form.html'))
-} )
-
-//Render the login page
-app.get('/login', (req, res)=>{
-    res.sendFile(path.join(__dirname,'public','login.html'))
-} )
 
 app.listen(process.env.PORT, ()=>{
     console.log("Listening @ port:", process.env.PORT)

@@ -1,51 +1,73 @@
-const mongoose = require('mongoose')
-const userSchema = mongoose.Schema({
-    email: {
-        type: String,
-        required: [true, "Please enter a valid email"],
-        unique: true,
-        lowercase: true
-    },
-    password: {
-        type: String,
-        required: true,
-        minlength: 6
-    },
-    roles: {
-        type: [{
-            type: String,
-            enum: ['user', 'admin']
-        }],
-        default: ['user']
-    },
-    address: {
-        street: { type: String },
-        city: { type: String },
-        state: { type: String },
-        country: { type: String },
-        postalCode: { type: String }
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt'); 
+
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 3, // Minimum username length for better security
+    maxlength: 20, // Reasonable maximum username length,
+    unique: true
   },
-  
-  isDriver: { type: Boolean, default: false },
-  isBusiness: { type: Boolean, default: false },
-  isBusinessName: { type: String, default: false},
-  vehicleType: { type: String },
-  vehiclePlateNumber: { type: String },
-  active: { type: Boolean, default: false },
-  currentLocation: {
-    latitude: { type: Number },
-    longitude: { type: Number }
+  email: {
+    type: String,
+    required: [true, "Please enter a valid email"],
+    unique: true,
+    lowercase: true,
+    trim: true
   },
+  password: {
+    type: String,
+    required: true,
+    minlength: 6 // Minimum password length for better security
+  },
+  roles: {
+    type: [{
+      type: String,
+      enum: ['user', 'admin']
+    }],
+    default: ['user']
+  },
+  address: {
+    type: {
+      street: { type: String },
+      city: { type: String },
+      state: { type: String },
+      country: { type: String },
+      postalCode: { type: String }
+    },
+    
+  },
+  img: {
+    type: String,
+    default: "https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg"
+  },
+  business: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Business',
+    default: null
+  },
+
 
 }, {
-    timestamps: true 
-})
+  timestamps: true 
+});
 
-userSchema.method("toJSON", function() {
-    const { __v, _id, ...object } = this.toObject();
-    object.id = _id;
-    return object;
-  })
+// Hash password before saving the user
+userSchema.pre('save', async function (next) {
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 10); // Adjust salt rounds as needed
+  }
+  next();
+});
 
-const User = mongoose.model('user', userSchema);
-module.exports = User
+
+userSchema.method('toJSON', function () {
+  const { __v, password, ...object } = this.toObject();
+  object.id = this._id.toString();
+  return object;
+});
+
+const User = mongoose.model('User', userSchema);
+module.exports = User;
