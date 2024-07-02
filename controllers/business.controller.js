@@ -1,9 +1,9 @@
 const Business = require('../models/business_model')
-const UploadImage = require('../controllers/images_controllers')
+const UploadImage = require('../middleware/images_controllers')
 
 exports.create = async (req, res) => {
   
-    console.log(req.body)
+   
     if (!req.body) {
         res.status(400).send({ message: "Content can not be empty!" });
         return;

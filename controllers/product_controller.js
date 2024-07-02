@@ -1,22 +1,35 @@
 const Product = require('../models/product_model'); 
+const UploadImage = require('../middleware/images_controllers')
 
-exports.createProduct = async (req, res)=>{
+
+exports.createProduct = async (req, res) => {
     try {
-        
-        const product = await Product(req.body)
+      if (!req.body) {
+        return res.status(400).send({ message: "Content can not be empty!" });
+      }
+  
+      if (!req.files || !req.files.images) {
+        return res.status(400).send({ message: "Please upload a product image" });
+      }
+  
+      const filename = `${Date.now()}-${req.files.images.name}`;
 
-        if(!product){
-           return  res.status(400).send({message: "Please enter proper data"})
-        }
+      const imgUrl = await UploadImage.UploadImage(req.files.images, filename);
+  
+      if (!imgUrl) {
+        return res.status(500).send({ message: "Failed to upload product image" });
+      }
+  
+      const product = new Product({ ...req.body, imageUrl: imgUrl.Location });
+  
+      await product.save();
 
-        await product.save()
-
-        res.status(200).send({message: "Product created successfully!", product})
-
+      res.status(200).send({ message: "Product created successfully!", product });
     } catch (error) {
-        res.status(500).send({message: "Can't create product, some error occured", error})
+      console.error(error);
+      res.status(500).send({ message: "Error creating product" }); 
     }
-}
+  };
 
 exports.getAllProducts = async (req, res)=>{
     try {
@@ -56,7 +69,7 @@ exports.deleteProduct = async (req, res)=>{
 
         const product = await Product.findByIdAndDelete(id)
 
-        res.status(200).send({message: "Product successfully deleted!"})
+        res.status(200).send({message: "Product successfully deleted!", item: product })
 
     } catch (error) {
         res.status(500).send({message: "Can't find product, some error occured", error})
