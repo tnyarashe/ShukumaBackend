@@ -55,19 +55,19 @@ exports.removeFromCart = async (req, res) => {
   }
 };
 
-// exports.clearCart = async (req, res) => {
-//   try {
-//     const cart = await Cart.findById(req.params.cartId);
-//     if (!cart) {
-//       return res.status(404).json({ message: 'Cart not found' });
-//     }
+exports.clearCart = async (req, res) => {
+  try {
+    const cart = await Cart.findById(req.params.cartId);
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
 
-//     cart.items = [];
-//     cart.totalPrice = 0;
+    cart.items = [];
+    cart.totalPrice = 0;
 
-//     await cart.save();
-//     res.json(cart);
-//   } catch (err) {
-//     res.status(500).json({ message: err.message });
-//   }
-// };
+    await cart.save();
+    res.json(cart);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
