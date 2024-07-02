@@ -39,7 +39,7 @@ mongoose.connect(process.env.db_uri)
 app.set('view engine,', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
-// app.use('/v1/users', userRoutes)
+app.use('/v1/users', userRoutes)
 app.use('/v1/auth ', authRoutes)
 app.use('/v1/product', productRoutes)
 // app.use('/v1/orders',orderRoutes);
