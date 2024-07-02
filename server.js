@@ -9,15 +9,11 @@ const userRoutes  = require('./routes/user.routes')
 const authRoutes  = require('./routes/auth.routes')
 const productRoutes = require('./routes/product.routes')
 // const orderRoutes = require('./routes/orderRoutes')
-// const order_model = require('./models/order_model');
 const path = require('path')
 const dotenv = require('dotenv')
 const cartRoutes  = require('./routes/cart.routes')
 
-// const { default: cartRoutes } = require('./routes/cartRoutes')
-
 // Set up Global configuration access
-
 dotenv.config()
 
 app.use(cors())
@@ -68,4 +64,3 @@ app.get('/login', (req, res)=>{
 app.listen(process.env.PORT, ()=>{
     console.log("Listening @ port:", process.env.PORT)
 })
-
