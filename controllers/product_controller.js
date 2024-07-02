@@ -93,19 +93,3 @@ exports.deleteAllProducts = async (req, res)=>{
         res.status(500).send({message: "Cannot delete products, some error occured", error})
     }
 }
-
-// exports.allAccess = (req, res) => {
-//     res.status(200).send("Public Content.");
-// };
-  
-// exports.user_dBoard = (req, res) => {
-//     res.status(200).send("User Content.");
-// };
-  
-// exports.admin_dBoard = (req, res) => {
-//     res.status(200).send("Admin Content.");
-// };
-  
-// exports.moderatorBoard = (req, res) => {
-//     res.status(200).send("Moderator Content.");
-// };
