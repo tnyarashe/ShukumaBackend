@@ -4,6 +4,7 @@ const cors = require("cors")
 
 const db = require('./config/db.config')
 const mongoose = require('mongoose')
+const businessRoutes  = require('./routes/business.routes')
 const userRoutes  = require('./routes/user.routes')
 const authRoutes  = require('./routes/auth.routes')
 const productRoutes = require('./routes/product.routes')
@@ -36,12 +37,14 @@ mongoose.connect(process.env.db_uri)
     })
 
 
-app.set('view engine,', 'ejs');
-app.set('views', path.join(__dirname, 'views'))
+// app.set('view engine,', 'ejs');
+// app.set('views', path.join(__dirname, 'views'))
 
 app.use('/v1/users', userRoutes)
 app.use('/v1/auth ', authRoutes)
 app.use('/v1/product', productRoutes)
+app.use('/v1/business', businessRoutes)
+
 // app.use('/v1/orders',orderRoutes);
 // app.use('/v1/cart', cartRoutes)
 
