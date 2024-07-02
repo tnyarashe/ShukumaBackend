@@ -28,6 +28,7 @@ const userSchema = mongoose.Schema({
   
   isDriver: { type: Boolean, default: false },
   isBusiness: { type: Boolean, default: false },
+  isBusinessName: { type: String, default: false},
   vehicleType: { type: String },
   vehiclePlateNumber: { type: String },
   active: { type: Boolean, default: false },

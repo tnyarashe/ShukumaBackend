@@ -74,6 +74,3 @@
 // };
 const {default: mongoose}  = require('mongoose');
 const Order = require('../models/order_model');
-
-
-exports.
