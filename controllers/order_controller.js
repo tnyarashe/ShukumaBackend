@@ -1,4 +1,3 @@
-const {default: mongoose}  = require('mongoose');
 const Order = require('../models/order_model');
 
 // Get 
@@ -73,3 +72,5 @@ exports.deleteAllOrders = async (req,res) =>{
         res.status(500).send(error);
     }
 }
+
+

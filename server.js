@@ -40,7 +40,7 @@ app.use('/v1/users', userRoutes)
 app.use('/v1/auth ', authRoutes)
 app.use('/v1/product', productRoutes)
 app.use('/v1/business', businessRoutes)
-app.use('/v1/orders', orderRoutes);
+app.use('/v1/orders', orderRoutes)
 app.use('/v1/cart', cartRoutes)
 
 app.get('/', (req, res)=>{
