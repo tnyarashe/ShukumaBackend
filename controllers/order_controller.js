@@ -70,7 +70,14 @@ exports.deleteAllOrders = async (req,res) =>{
         res.status(200).send('Orders deleted');
     } catch (error) {
         res.status(500).send(error);
+    try {
+        const order = await Order.deleteMany()
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+        res.status(200).send('Orders deleted');
+    } catch (error) {
+        res.status(500).send(error);
+     }
     }
 }
-
-
