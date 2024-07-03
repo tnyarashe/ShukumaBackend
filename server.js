@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 const userRoutes  = require('./routes/user.routes')
 const authRoutes  = require('./routes/auth.routes')
 const productRoutes = require('./routes/product.routes')
-// const orderRoutes = require('./routes/orderRoutes')
+const orderRoutes = require('./routes/order.routes')
 // const order_model = require('./models/order_model');
 const path = require('path')
 const dotenv = require('dotenv')
@@ -42,7 +42,7 @@ app.set('views', path.join(__dirname, 'views'))
 // app.use('/v1/users', userRoutes)
 app.use('/v1/auth ', authRoutes)
 app.use('/v1/product', productRoutes)
-// app.use('/v1/orders',orderRoutes);
+app.use('/v1/orders',orderRoutes);
 // app.use('/v1/cart', cartRoutes)
 
 app.get('/', (req, res)=>{
