@@ -8,7 +8,7 @@ const businessRoutes  = require('./routes/business.routes')
 const userRoutes  = require('./routes/user.routes')
 const authRoutes  = require('./routes/auth.routes')
 const productRoutes = require('./routes/product.routes')
-// const orderRoutes = require('./routes/orderRoutes')
+const orderRoutes = require('./routes/order.routes')
 const path = require('path')
 const dotenv = require('dotenv')
 const cartRoutes  = require('./routes/cart.routes')
@@ -40,8 +40,7 @@ app.use('/v1/users', userRoutes)
 app.use('/v1/auth ', authRoutes)
 app.use('/v1/product', productRoutes)
 app.use('/v1/business', businessRoutes)
-
-// app.use('/v1/orders',orderRoutes);
+app.use('/v1/orders', orderRoutes);
 app.use('/v1/cart', cartRoutes)
 
 app.get('/', (req, res)=>{

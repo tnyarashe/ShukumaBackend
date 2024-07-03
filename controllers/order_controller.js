@@ -127,16 +127,24 @@ exports.updateOrder = async (req, res) => {
 
 // Delete
 exports.deleteOrder = async (req,res) =>{
-    try{
-
-    }catch{
-
+    try {
+        const order = await Order.findByIdAndDelete(req.params.id);
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+        res.status(200).send('Order deleted');
+    } catch (error) {
+        res.status(500).send(error);
     }
 }
 exports.deleteAllOrders = async (req,res) =>{
-    try{
-
-    }catch{
-
+    try {
+        const order = await Order.deleteMany()
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+        res.status(200).send('Orders deleted');
+    } catch (error) {
+        res.status(500).send(error);
     }
 }
