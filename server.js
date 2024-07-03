@@ -9,6 +9,7 @@ const userRoutes  = require('./routes/user.routes')
 const authRoutes  = require('./routes/auth.routes')
 const productRoutes = require('./routes/product.routes')
 const orderRoutes = require('./routes/order.routes')
+const orderRoutes = require('./routes/order.routes')
 const cartRoutes  = require('./routes/cart.routes')
 const path = require('path')
 const dotenv = require('dotenv')
@@ -40,6 +41,10 @@ app.use('/v1/auth', authRoutes)
 app.use('/v1/products', productRoutes)
 app.use('/v1/business', businessRoutes)
 app.use('/v1/orders', orderRoutes)
+<<<<<<< HEAD
+=======
+app.use('/v1/orders', orderRoutes)
+>>>>>>> feature/tsepoFeature
 app.use('/v1/cart', cartRoutes)
 
 app.get('/', (req, res)=>{
