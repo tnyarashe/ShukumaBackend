@@ -8,7 +8,12 @@ const businessRoutes  = require('./routes/business.routes')
 const userRoutes  = require('./routes/user.routes')
 const authRoutes  = require('./routes/auth.routes')
 const productRoutes = require('./routes/product.routes')
+<<<<<<< HEAD
 // const orderRoutes = require('./routes/orderRoutes')
+=======
+const orderRoutes = require('./routes/order.routes')
+// const order_model = require('./models/order_model');
+>>>>>>> feature/Dini
 const path = require('path')
 const dotenv = require('dotenv')
 const cartRoutes  = require('./routes/cart.routes')
@@ -34,13 +39,11 @@ mongoose.connect(process.env.db_uri)
 
 
 
-app.use('/v1/users', userRoutes)
-app.use('/v1/auth', authRoutes)
-app.use('/v1/products', productRoutes)
-app.use('/v1/business', businessRoutes)
-
-// app.use('/v1/orders',orderRoutes);
-app.use('/v1/cart', cartRoutes)
+// app.use('/v1/users', userRoutes)
+app.use('/v1/auth ', authRoutes)
+app.use('/v1/product', productRoutes)
+app.use('/v1/orders',orderRoutes);
+// app.use('/v1/cart', cartRoutes)
 
 app.get('/', (req, res)=>{
     res.send("Welcome to our API");
