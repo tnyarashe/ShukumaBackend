@@ -1,5 +1,3 @@
-odule.exports = order;
-
 const mongoose = require('mongoose');
 const orderSchema = mongoose.Schema({
     description:{
