@@ -8,13 +8,8 @@ const businessRoutes  = require('./routes/business.routes')
 const userRoutes  = require('./routes/user.routes')
 const authRoutes  = require('./routes/auth.routes')
 const productRoutes = require('./routes/product.routes')
-<<<<<<< HEAD
 const orderRoutes = require('./routes/order.routes')
 const cartRoutes  = require('./routes/cart.routes')
-=======
-const orderRoutes = require('./routes/order.routes')
-// const order_model = require('./models/order_model');
->>>>>>> feature/Dini
 const path = require('path')
 const dotenv = require('dotenv')
 
