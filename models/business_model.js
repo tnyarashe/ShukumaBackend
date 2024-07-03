@@ -1,15 +1,41 @@
 const mongoose = require('mongoose')
 var business_schema = mongoose.Schema(
         {
-            name: String,
-            email: String,
-            password: String,
-            tel_no: String,
+            name:{ 
+                type: String,
+                required: true,
+                trim: true,
+                unique: true,
+            },
+            email: { 
+                type: String,
+                required: true,
+                trim: true
+            },
+            description: { 
+                type: String,
+                required: true,
+                trim: true
+            },
+            industry: String,
+            tel_no: { 
+                type: String,
+                required: true,
+                trim: true
+            },
             address: String,
             img: {
                 type: String,
                 default: "https://www.thesait.org.za/global_graphics/default-store-350x350.jpg"
             },
+            // admins: [{
+            //     type: mongoose.Schema.Types.ObjectId,
+            //     ref: 'User' 
+            //   }],
+            //   users: [{
+            //     type: mongoose.Schema.Types.ObjectId,
+            //     ref: 'User' 
+            //   }]
         }
     );
 
