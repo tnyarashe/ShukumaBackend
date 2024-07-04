@@ -1,18 +1,53 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const CartItemSchema = new Schema({
-  productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
-  quantity: { type: Number, required: true, min: 1 },
-  price: { type: Number, required: true }
+const CartSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', 
+    required: true,
+  },
+  items: [{
+    productId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product', 
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+  }],
+  totalPrice: {
+    type: Number,
+    virtual: true,
+    get() {
+      return this.items.reduce((total, item) => {
+        return total + (item.productId.price * item.quantity);
+      }, 0);
+    },
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-const CartSchema = new Schema({
-  items: [CartItemSchema],
-  totalPrice: { type: Number, required: true }
+// // Virtual property for calculated total price
+// CartSchema.virtual('totalPrice').get(function () {
+//   return this.items.reduce((total, item) => {
+//     return total + (item.productId.price * item.quantity);
+//   }, 0);
+// });
+
+CartSchema.method('toJSON', function () {
+  const { __v, password, ...object } = this.toObject();
+  object.id = this._id.toString();
+  return object;
 });
-
-module.exports = mongoose.model('Cart', CartSchema);
-
-
-
+const Cart = mongoose.model('Cart', CartSchema);
+module.exports = Cart
