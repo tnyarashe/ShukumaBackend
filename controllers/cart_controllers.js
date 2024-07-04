@@ -10,9 +10,11 @@ exports.addToCart = async (req, res) => {
     if (!productId || !quantity || quantity < 1) {
       return res.status(400).send({ message: "Invalid product ID or quantity" });
     }
-    const id = "6683fb975fc0983c6bcd9e18"
+    const id = "66865064ad57296a97884bc3"
+    const cartId = req.params.id
     
     let cart = await Cart.findOne({ userId: id });
+    // let cartid = bodycart
 
     
     if (!cart) {
@@ -30,7 +32,7 @@ exports.addToCart = async (req, res) => {
 
     
     const existingItem = cart.items.find(item => item.productId.equals(productId));
-    let tot;
+    
     
     if (existingItem) {
       existingItem.quantity += quantity;
@@ -38,7 +40,7 @@ exports.addToCart = async (req, res) => {
       
       cart.items.push({ productId, quantity, price: product.price });
 
-      tot = totalPrice
+      
     }
 
    

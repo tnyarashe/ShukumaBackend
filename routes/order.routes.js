@@ -5,5 +5,5 @@ const orderController = require('../controllers/order_controller');
 router.post('/', orderController.createOrder);
 router.delete('/orders/:id', orderController.deleteOrder);
 router.delete('/', orderController.deleteAllOrders);
-
+router.get('/', orderController.getAllOrders )
 module.exports = router;
