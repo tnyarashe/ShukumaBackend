@@ -10,8 +10,8 @@ app.use(fileUpload())
 exports.UploadImage = async (fileImage) => {
 
     AWS.config.update({
-        accessKeyId: process.env.AWS_AKEY,
-        secretAccessKey: process.env.AWS_SKEY,
+        accessKeyId: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY,
         region: process.env.AWS_REGION
     })
 
