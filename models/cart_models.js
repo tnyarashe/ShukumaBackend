@@ -20,12 +20,6 @@ const CartSchema = new mongoose.Schema({
   }],
   totalPrice: {
     type: Number,
-    virtual: true,
-    get() {
-      return this.items.reduce((total, item) => {
-        return total + (item.productId.price * item.quantity);
-      }, 0);
-    },
   },
   createdAt: {
     type: Date,

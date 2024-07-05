@@ -46,6 +46,8 @@ exports.createOrder = async (req, res) => {
     
     await newOrder.save(); 
     
+    await Cart.findByIdAndDelete(cartId);
+
     res.status(201).send({ message: 'Order created successfully', order: newOrder });
   } catch (error) {
     console.error(error);
