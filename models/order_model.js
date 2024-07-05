@@ -1,100 +1,73 @@
-// const mongoose = require('mongoose');
-// const orderSchema = mongoose.Schema({
-//   customerName: {
-//     type: String,
-//     required: true
-//   },
-//   address: {
-//     type: String,
-//     required: true
-//   },
-//   items: {
-//     type: [{
-//       name: {
-//         type: String,
-//         required: true
-//       },
-//       price: {
-//         type: Number,
-//         required: true
-//       },
-//       quantity: {
-//         type: Number,
-//         required: true
-//       }
-//     }],
-//     required: true
-//   },
-//   totalAmount: {
-//     type: Number,
-//     required: true
-//   },
-//   code: {
-//     type: String,
-//     required: true,
-//     unique: true
-//   },
-//   isCart: {
-//     type: Boolean,
-//     default: false
-//   },
-//   createdAt: {
-//     type: Date,
-//     default: Date.now
-//   }
-// });
-
-// const order = mongoose.model('order', orderSchema);
-
-// module.exports = order;
 
 const mongoose = require('mongoose');
-const orderSchema = mongoose.Schema({
-    description:{
-        type:String,
-        required:true
+const Cart  = require('../models/cart_models')
+const OrderSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  cartId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Cart',
+    required: true,
+  },
+  items: [{
+    productId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true,
     },
-
-    total:{
-        type:Number,
-        required:true
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1,
     },
-
-    user:{
-        type:String,
-        required: true
-
+    price: { // Store the price at the time of order creation
+      type: Number,
+    //   required: true,
     },
+  }],
+ 
+  shippingAddress: String,
+  status: {
+    type: String,
+    enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'complete'],
+    default: 'pending',
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-    address:{
-        street:{type:String},
-        city:{type:String},
-        postalcode:{type:String},
-        country:{type:String},
+// OrderSchema.virtual('shippingAddress').get(function () {
+//   // Implement logic to retrieve shipping address from User model based on userId
+// });
 
-    },
-    
-    items:{
-        type:String,
-        required:true
-    },
+// OrderSchema.pre('save', async function (next) {
+//   const cart = await Cart.findById(this.cartId);
+//   if (!cart) {
+//     throw new Error('Cart not found');
+//   }
 
-    orderNumber:{
-        type:Number,
-        required:true
-    },
+//   // Transfer items from cart to order (optional)
+//   // ... (logic to populate order.items and calculate totalPrice)
 
-    
-},{
-    timestamps:true
-    
-})
-orderSchema.method('to JSON', function(){
+//   this.totalPrice = cart.totalPrice; // Or calculate total price based on order.items
+//   next();
+// });
+
+OrderSchema.method('toJSON', function(){
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
 })
 
 
-const Order = mongoose.model('order', orderSchema)
+const Order = mongoose.model('Order', OrderSchema)
 module.exports = Order
