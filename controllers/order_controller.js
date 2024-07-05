@@ -9,22 +9,7 @@ exports.getAllOrders = async (req, res) =>{
         res.status(500).json({error:"An error occured while fetching orders"});
     };
 };
-// exports.createOrder = async (req, res) =>{
-//     try{
-//        const { user, total, items} = req.body;
-    
-//        const Order = new Order({
-//         user,
-//         total,
-//         items,
-//        });
 
-//        const newOrder = await Order.save();
-//        res.status(201).json(newOrder);
-//     }catch{
-//        res.status(500).json({ error:"An error occured while fetching orders" });
-//     }
-// }
 exports.createOrder = async (req, res) => {
   try {
     const userId = req.body.userId;
