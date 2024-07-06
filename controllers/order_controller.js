@@ -1,74 +1,133 @@
-// const Order = require('../models/order_model');
-// const Cart = require('../models/cart_models');
+const Order = require('../models/order_model');
+const User = require('../models/user_model');
+const Cart = require('../models/cart_models');
+exports.getAllOrders = async (req, res) =>{
+    try{
+        const orders = await Order.find();
+        res.status(200).json(orders);
+    }catch(error){
+        res.status(500).json({error:"An error occured while fetching orders"});
+    };
+};
 
+exports.createOrder = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const cartId = req.body.cartId;
+    const address  = req.body.address
 
-// function generateOrderCode() {
-//   // Generate an order code
-//   const prefix = 'ORD';
-//   const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
-//   const timestamp = Date.now().toString(36).toUpperCase();
+    // Check if user and cart exist
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
 
-//   return `${prefix}-${randomPart}-${timestamp}`;
-// }
+    const cart = await Cart.findById(cartId);
+    if (!cart) {
+      return res.status(400).send({ message: 'Cart not found' });
+    }
 
-// exports.placeOrder = async (req, res) => {
-//   const { cartId, userId } = req.body;
+    // Create a new order object
+    const newOrder = new Order({
+      userId,
+      cartId,
+      items: cart.items.map((item) => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        // price: item.productId.price,
+      })),
+    //   totalPrice: cart.totalPrice,
+    });
 
-//   try {
+    // Get user's shipping address (replace with your logic)
+    const shippingAddress = address; // Replace with actual function
+    newOrder.shippingAddress = shippingAddress;
+
     
-//     const cart = await Cart.findOne({ cartId });
-//     const items = cart.items;
-
-//     let totalAmount = 0;
+    await newOrder.save(); 
     
-//     items.forEach(item => {
-//       totalAmount += item.price * item.quantity;
-//     });
+    await Cart.findByIdAndDelete(cartId);
 
-//     // Create a new order
-//     const newOrder = new Order({
-//       customerName: req.body.customerName,
-//       address: req.body.address,
-//       items,
-//       totalAmount,
-//       code: generateOrderCode(),
-//     });
+    res.status(201).send({ message: 'Order created successfully', order: newOrder });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Error creating order' });
+  }
+}
+exports.getOrderById = async (req,res) =>{
+    try{
+        const { id } = req.params;
+        const order = await Order.findById(id);
+        if (!order) {
+          res.status(404).json({ message: 'Order not found' });
+          return;
+        }
+        res.status(200).json(order);
+    }catch{
+        res.status(500).json({ error:"An error occured while fetching orders" });
+    }
+}
+exports.getOneOrder = async (req, res) =>{
+    try{
+       const orderId = req.params.id;
+       const order = OrderService.getOneOrder(orderId);
+       res.status(200).json(order);
+    }catch (error){
+       res.status(400).json({ error: error.message });
+    }
+};
 
-//     // Save the order
-//     await newOrder.save();
+// Update
+exports.updateOrder = async (req, res) => {
+    try{
+       const { id } = req.params;
+       const { user, total, items } = req.body;
+       
+       const order = await Order.findById(id);
+       if(!order) {
+        res.status(400).json({ message: 'Order not found'});
+       }
 
-//     res.json({ message: 'Order placed successfully', orderId: newOrder._id });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// };
+       order.user = user;
+       order.total = total;
+       order.items = items;
 
-// exports.createOrder = (req, res) => {
-//   const { customerName, address, items } = req.body;
-//   const orderCode = generateOrderCode();
+       const updatedOrder = await order.save();
+       res.status(200).json(updatedOrder);
+    }catch (error){
+        res.status(500).json({ message: error.message });
+    }
+};
 
-//   // Calculate total amount
-//   let totalAmount = 0;
-//   // Perform calculations based on item prices, quantities, etc.
-//   items.forEach(item => {
-//     totalAmount += item.price * item.quantity;
-//   });
-
-//   const newOrder = new Order({
-//     customerName,
-//     address,
-//     items,
-//     totalAmount,
-//     code: orderCode,
-//   });
-
-//   newOrder.save()
-//     .then(() => {
-//       res.json({ message: 'Order created successfully', orderCode });
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//       res.status(500).json({ error: 'Internal server error' });
-//     });
-// };
+// Delete
+exports.deleteOrder = async (req,res) =>{
+    try {
+        const order = await Order.findByIdAndDelete(req.params.id);
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+        res.status(200).send('Order deleted');
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+exports.deleteAllOrders = async (req,res) =>{
+    try {
+        const order = await Order.deleteMany()
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+        res.status(200).send('Orders deleted');
+    } catch (error) {
+        res.status(500).send(error);
+    try {
+        const order = await Order.deleteMany()
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+        res.status(200).send('Orders deleted');
+    } catch (error) {
+        res.status(500).send(error);
+     }
+    }
+}

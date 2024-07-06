@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken')
 const { request } = require("express")
 
 exports.signup = async (req, res) => {
-    const { email, password, roles } = req.body
+    const { username, email, password, roles, business,img } = req.body
 
     try {
-        if (!(email && password)) {
-            return res.send("User registration failed. Try Again")
+        if (!(email && password && username)) {
+            return res.status(400).send("User registration failed. Try Again")
         }
 
         const existingUser = await User.findOne({ email });
@@ -19,9 +19,12 @@ exports.signup = async (req, res) => {
         }
 
         const user = new User({
+            username,
             email,
             password: await bcrypt.hash(password, 10),
-            roles: roles || ['user']
+            roles: roles || ['user'],
+            business,
+            img
         })
 
         await user.save()
@@ -29,7 +32,7 @@ exports.signup = async (req, res) => {
         return res.status(200).send({ message: "User created successfully", user })
 
     } catch (error) {
-        res.status(500).send("Signup failed, some error occured", error)
+        res.status(500).send({message: "Signup failed, some error occured", error})
     }
 }
 
@@ -73,4 +76,3 @@ exports.login = async (req, res) => {
         res.status(500).send("Login failed")
     }
 }
-
