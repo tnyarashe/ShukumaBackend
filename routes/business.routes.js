@@ -15,5 +15,4 @@
 
     //router.delete('/', shop.deleteAll)
     
-
    module.exports= router

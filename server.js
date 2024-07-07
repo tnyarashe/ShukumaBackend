@@ -9,11 +9,10 @@ const userRoutes  = require('./routes/user.routes')
 const authRoutes  = require('./routes/auth.routes')
 const productRoutes = require('./routes/product.routes')
 const orderRoutes = require('./routes/order.routes')
-const orderRoutes = require('./routes/order.routes')
+const favsRoutes = require('./routes/favorites.routes')
 const cartRoutes  = require('./routes/cart.routes')
 const path = require('path')
 const dotenv = require('dotenv')
-
 
 // Set up Global configuration access
 dotenv.config()
@@ -24,7 +23,6 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(fileUpload())
 
-
 mongoose.connect(process.env.db_uri)
     .then(()=>{
         console.log("Connected successfully to DB!")
@@ -34,23 +32,17 @@ mongoose.connect(process.env.db_uri)
         process.exit();
     })
 
-
-
 app.use('/v1/users', userRoutes)
 app.use('/v1/auth', authRoutes)
 app.use('/v1/products', productRoutes)
 app.use('/v1/business', businessRoutes)
 app.use('/v1/orders', orderRoutes)
-<<<<<<< HEAD
-=======
-app.use('/v1/orders', orderRoutes)
->>>>>>> feature/tsepoFeature
 app.use('/v1/cart', cartRoutes)
+app.use('/v1/favourites', favsRoutes)
 
 app.get('/', (req, res)=>{
     res.send("Welcome to our API");
 })
-
 
 app.listen(process.env.PORT, ()=>{
     console.log("Listening @ port:", process.env.PORT)

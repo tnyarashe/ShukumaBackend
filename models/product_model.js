@@ -62,6 +62,5 @@ productSchema.method("toJSON", function() {
     return object;
   })
 
-const Product = mongoose.model('product', productSchema)
-
+const Product = mongoose.model('Product', productSchema)
 module.exports = Product

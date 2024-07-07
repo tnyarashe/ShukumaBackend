@@ -1,6 +1,6 @@
 const Order = require('../models/order_model');
-
-// Get 
+const User = require('../models/user_model');
+const Cart = require('../models/cart_models');
 exports.getAllOrders = async (req, res) =>{
     try{
         const orders = await Order.find();
@@ -9,21 +9,50 @@ exports.getAllOrders = async (req, res) =>{
         res.status(500).json({error:"An error occured while fetching orders"});
     };
 };
-exports.createOrder = async (req, res) =>{
-    try{
-       const { user, total, items} = req.body;
-    
-       const Order = new Order({
-        user,
-        total,
-        items,
-       });
 
-       const newOrder = await Order.save();
-       res.status(201).json(newOrder);
-    }catch{
-       res.status(500).json({ error:"An error occured while fetching orders" });
+exports.createOrder = async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const cartId = req.body.cartId;
+    const address  = req.body.address
+
+    // Check if user and cart exist
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
     }
+
+    const cart = await Cart.findById(cartId);
+    if (!cart) {
+      return res.status(400).send({ message: 'Cart not found' });
+    }
+
+    // Create a new order object
+    const newOrder = new Order({
+      userId,
+      cartId,
+      items: cart.items.map((item) => ({
+        productId: item.productId,
+        quantity: item.quantity,
+        // price: item.productId.price,
+      })),
+    //   totalPrice: cart.totalPrice,
+    });
+
+    // Get user's shipping address (replace with your logic)
+    const shippingAddress = address; // Replace with actual function
+    newOrder.shippingAddress = shippingAddress;
+
+    
+    await newOrder.save(); 
+    
+    await Cart.findByIdAndDelete(cartId);
+
+    res.status(201).send({ message: 'Order created successfully', order: newOrder });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: 'Error creating order' });
+  }
 }
 exports.getOrderById = async (req,res) =>{
     try{
