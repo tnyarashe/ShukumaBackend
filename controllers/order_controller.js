@@ -1,6 +1,8 @@
 const Order = require('../models/order_model');
 const User = require('../models/user_model');
 const Cart = require('../models/cart_models');
+
+
 exports.getAllOrders = async (req, res) =>{
     try{
         const orders = await Order.find();

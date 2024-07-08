@@ -1,15 +1,17 @@
 const Cart = require('../models/cart_models')
-
+const mongoose = require("mongoose")
 const Product = require('../models/product_model');
 
 exports.addToCart = async (req, res) => {
   try {
     const { productId, quantity } = req.body;
-
+    
+    const id = "66865064ad57296a97884bc3"
+    
     if (!productId || !quantity || quantity < 1) {
       return res.status(400).send({ message: "Invalid product ID or quantity" });
     }
-    const id = "66865064ad57296a97884bc3"
+    
     const cartId = req.params.id
     
     let cart = await Cart.findOne({ userId: id });
@@ -64,13 +66,20 @@ exports.getAllCart = async (req, res) => {
 
 exports.removeFromCart = async (req, res) => {
   try {
-    const cart = await Cart.findById(req.params.cartId);
+    const userId = req.body.userId
+    const productId = req.body.productId
+    const cart = await Cart.findOne({userId: userId}).populate( { path: 'items.productId'});;
+    // const cart = await Cart.findById(id);
+    console.log(";;;",cart, userId, productId)
+    
+
     if (!cart) {
       return res.status(404).json({ message: 'Cart not found' });
     }
 
-    cart.items = cart.items.filter(item => !item.productId.equals(req.params.productId));
-    cart.totalPrice = cart.items.reduce((total, item) => total + item.quantity * item.price, 0);
+     cart.items = cart.items.filter(item => item.productId._id.toString() !== productId);
+    // cart.totalPrice = cart.items.reduce((total, item) => total + item.quantity * item.price, 0);
+    console.log("ll",cart)
 
     await cart.save();
     res.json(cart);
@@ -98,23 +107,25 @@ exports.clearCart = async (req, res) => {
 
 exports.getACart = async (req, res) => {
   try {
-    // Find the user's cart based on their ID (replace with your logic)
-    id = req.params.userId
-    const cart = await Cart.findOne({ userId: id });
+    userId = req.body
+    const cart = await Cart.find(userId).populate( { path: 'items.productId'});;
 
     if (!cart) {
       return res.status(200).send({ message: "Cart not found" }); // Or send an empty cart object
     }
 
-    // Populate product details for each item in the cart (optional)
-    if (cart.items.length > 0) {
-      const populatedCart = await Cart.populate(cart, { path: 'items.productId'});
+    if (cart.items) {
+      // const populatedCart = await Cart.populate( { path: 'items.productId'});
+      // console.log(populatedCart)
       const totalPrice = populatedCart.items.reduce((total, item) => {
+      
         return total + (item.productId.price * item.quantity);
       }, 0);
+      
+      console.log(totalPrice)
       res.status(200).send({populatedCart, totalPrice});
     } else {
-      res.status(200).send(cart); // Send the cart even if it's empty
+      res.status(200).send(cart); 
     }
 
   } catch (error) {
