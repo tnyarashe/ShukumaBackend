@@ -44,13 +44,13 @@ exports.getAllProducts = async (req, res)=>{
 
 exports.getOneProduct = async (req, res)=>{
     try {
-        const {id} = req.params.id
+        const id = req.params.id
 
-        if(!{id}){
+        if(!id){
             return res.status(400).send("Please enter proper product ID.")
         }
 
-        const product = await Product.findOne(id)
+        const product = await Product.findById(id)
 
         res.status(200).send({message: "Product successfully retrieved ", product})
 
