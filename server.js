@@ -14,7 +14,6 @@ const cartRoutes  = require('./routes/cart.routes')
 const path = require('path')
 const dotenv = require('dotenv')
 
-
 // Set up Global configuration access
 dotenv.config()
 
@@ -24,7 +23,6 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(fileUpload())
 
-
 mongoose.connect(process.env.db_uri)
     .then(()=>{
         console.log("Connected successfully to DB!")
@@ -33,8 +31,6 @@ mongoose.connect(process.env.db_uri)
         console.log("Could not connect to DB due some error:", error.stack),
         process.exit();
     })
-
-
 
 app.use('/v1/users', userRoutes)
 app.use('/v1/auth', authRoutes)
@@ -47,7 +43,6 @@ app.use('/v1/favourites', favsRoutes)
 app.get('/', (req, res)=>{
     res.send("Welcome to our API");
 })
-
 
 app.listen(process.env.PORT, ()=>{
     console.log("Listening @ port:", process.env.PORT)
