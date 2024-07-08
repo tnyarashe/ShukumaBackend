@@ -27,7 +27,7 @@ exports.createProduct = async (req, res) => {
       res.status(200).send({ message: "Product created successfully!", product });
     } catch (error) {
       console.error(error);
-      res.status(500).send({ message: "Error creating product" }); 
+      res.status(400).send({ message: "Error creating product" }); 
     }
   };
 

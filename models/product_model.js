@@ -54,7 +54,10 @@ const productSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Business',
         }
-})
+}, {
+    timestamps: true 
+  });
+  
 
 productSchema.method("toJSON", function() {
     const { __v, _id, ...object } = this.toObject();
