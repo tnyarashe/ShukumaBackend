@@ -66,8 +66,9 @@ exports.getAllCart = async (req, res) => {
 
 exports.removeFromCart = async (req, res) => {
   try {
-    const userId = req.body.userId
-    const productId = req.body.productId
+    const userId = req.query.userId
+    const productId = req.query.productId
+    
     const cart = await Cart.findOne({userId: userId}).populate( { path: 'items.productId'});;
     // const cart = await Cart.findById(id);
     console.log(";;;",cart, userId, productId)

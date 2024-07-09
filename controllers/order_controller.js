@@ -17,7 +17,8 @@ exports.createOrder = async (req, res) => {
     const userId = req.body.userId;
     const cartId = req.body.cartId;
     const address  = req.body.address
-
+    
+    console.log()
     // Check if user and cart exist
     const user = await User.findById(userId);
     if (!user) {
@@ -56,10 +57,12 @@ exports.createOrder = async (req, res) => {
     res.status(500).send({ message: 'Error creating order' });
   }
 }
+
 exports.getOrderById = async (req,res) =>{
     try{
-        const { id } = req.params;
-        const order = await Order.findById(id);
+        const { userId, cartId } = req.body;
+    
+        const order = await Order.findOne({userId, cartId});
         if (!order) {
           res.status(404).json({ message: 'Order not found' });
           return;
