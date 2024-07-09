@@ -9,6 +9,7 @@ exports.add =  async (req, res) => {
 
     const existingFavorite = await Favorite.findOne({ userId, itemId });
     if (existingFavorite) {
+
       return res.status(400).send({ message: 'Item already favorited' });
     }
 
@@ -26,7 +27,7 @@ exports.remove =  async (req, res) => {
     try {
       const userId = req.params.userId;
       const itemId = req.body
-
+      
       if(userId){
         await Favorite.findOneAndDelete(itemId);
         res.status(200).send({ message: 'Favorite removed' });
@@ -40,8 +41,8 @@ exports.remove =  async (req, res) => {
 
 exports.fetchAll = async (req, res) => {
     try {
-      const userId = req.params.userId;
-      const favorites = await Favorite.find({ userId }).populate('itemId'); // Populate product details
+      const userId = req.body;
+      const favorites = await Favorite.find(userId).populate('itemId'); 
       res.status(200).send(favorites);
     } catch (error) {
       console.error(error);

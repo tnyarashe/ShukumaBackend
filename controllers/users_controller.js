@@ -12,7 +12,7 @@ exports.getAllUsers = async (req, res)=>{
         res.status(200).send({message : "Managed to get all users", usersAll})
         
     }catch(err){
-        res.status(500).send("Could not get all the users", err)
+        res.status(500).send({message:"Could not get all the users", err})
     }
 }
 
