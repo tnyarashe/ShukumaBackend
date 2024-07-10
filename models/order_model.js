@@ -28,12 +28,18 @@ const OrderSchema = new mongoose.Schema({
     //   required: true,
     },
   }],
- 
   shippingAddress: String,
   status: {
     type: String,
     enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'complete'],
     default: 'pending',
+  },
+  deliveryDetails:{
+    DriverId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    }
   },
   createdAt: {
     type: Date,
