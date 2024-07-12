@@ -28,17 +28,50 @@ const OrderSchema = new mongoose.Schema({
     //   required: true,
     },
   }],
- 
-  shippingAddress: String,
+  shippingAddress: {
+    address:String,
+    coordinates:{
+      lat:{
+        type: Number,
+        required: true,
+        default: 0.0
+      },
+      lng:{
+        type: Number,
+        required: true,
+        default: 0.0
+      }
+    },
+  },
   status: {
     type: String,
-    enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled', 'complete'],
+    enum: ['pending', 'processing', 'in-progress', 'cancelled', 'complete'],
     default: 'pending',
+  },
+  deliveryDetails:{
+    DriverId: {
+      type: String,
+      // ref: 'Driver',
+      required: true
+    },
+    coordinates:{
+      lat:{
+        type: Number,
+        required: true,
+        default: 0.0
+      },
+      lng:{
+        type: Number,
+        required: true,
+        default: 0.0
+      }
+    },
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
+
   updatedAt: {
     type: Date,
     default: Date.now,

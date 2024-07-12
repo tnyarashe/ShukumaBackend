@@ -5,20 +5,44 @@ const Cart = require('../models/cart_models');
 
 exports.getAllOrders = async (req, res) =>{
     try{
-        const orders = await Order.find();
+        const user = req.params.userid
+        const orders = await Order.find({userId:user});
         res.status(200).json(orders);
     }catch(error){
         res.status(500).json({error:"An error occured while fetching orders"});
     };
 };
 
+exports.getAllDriverOrders = async (req, res) =>{
+    try
+    {
+        const DriverId = req.params.driverid
+
+        const orders = await Order.find();
+        const drivers_orders = [];
+
+        for(let order of orders){
+            if(DriverId == order.deliveryDetails.DriverId){
+                drivers_orders.push(order)
+            }
+        }
+        
+        res.status(200).json(drivers_orders);
+    }catch(error){
+        console.log(error)
+        res.status(500).json({error:error});
+    };
+};
+
 exports.createOrder = async (req, res) => {
   try {
+    
     const userId = req.body.userId;
     const cartId = req.body.cartId;
     const address  = req.body.address
     
-    console.log()
+    console.log(req.body)
+
     // Check if user and cart exist
     const user = await User.findById(userId);
     if (!user) {
@@ -44,7 +68,10 @@ exports.createOrder = async (req, res) => {
 
     // Get user's shipping address (replace with your logic)
     const shippingAddress = address; // Replace with actual function
-    newOrder.shippingAddress = shippingAddress;
+    newOrder.shippingAddress.address = shippingAddress.delA;
+    newOrder.shippingAddress.coordinates = shippingAddress.cod;
+    newOrder.deliveryDetails.DriverId = "1234567890"
+    newOrder.deliveryDetails.coordinates = {lat:0.0, lng:0.0}
 
     
     await newOrder.save(); 
@@ -85,19 +112,27 @@ exports.getOneOrder = async (req, res) =>{
 // Update
 exports.updateOrder = async (req, res) => {
     try{
-       const { id } = req.params;
-       const { user, total, items } = req.body;
+       const id = req.params.id;
        
        const order = await Order.findById(id);
+
        if(!order) {
         res.status(400).json({ message: 'Order not found'});
        }
 
-       order.user = user;
-       order.total = total;
-       order.items = items;
+    //    order.user = user;
+    //    order.total = total;
+    //    order.items = items;
+       order.status = req.body.status
+       order.deliveryDetails.coordinates = req.body.driverLoca
+
+    //    console.log(req.body.status)
+    //    console.log(req.body.driverLoca)
+
+    //    return res.status(200).json("yes");
 
        const updatedOrder = await order.save();
+
        res.status(200).json(updatedOrder);
     }catch (error){
         res.status(500).json({ message: error.message });
