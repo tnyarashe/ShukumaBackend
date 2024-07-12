@@ -19,9 +19,12 @@ dotenv.config()
 
 app.use(cors())
 
+
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
-app.use(fileUpload())
+
+
+
 
 mongoose.connect(process.env.db_uri)
     .then(()=>{
@@ -39,6 +42,7 @@ app.use('/v1/business', businessRoutes)
 app.use('/v1/orders', orderRoutes)
 app.use('/v1/cart', cartRoutes)
 app.use('/v1/favourites', favsRoutes)
+
 
 app.get('/', (req, res)=>{
     res.send("Welcome to our API");

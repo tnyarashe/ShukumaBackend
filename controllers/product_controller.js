@@ -4,23 +4,27 @@ const UploadImage = require('../middleware/images_controllers')
 
 exports.createProduct = async (req, res) => {
     try {
+        console.log(req.body)
+        console.log(req.files)
+
       if (!req.body) {
         return res.status(400).send({ message: "Content can not be empty!" });
       }
   
-      if (!req.files || !req.files.images) {
+      if (!req.files || !req.files.file) {
         return res.status(400).send({ message: "Please upload a product image" });
       }
-  
-      const filename = `${Date.now()}-${req.files.images.name}`;
+     
+      const image = req.files.images
+      const filename = `${Date.now()}-${req.files.file.name}`;
 
-      const imgUrl = await UploadImage.UploadImage(req.files.images, filename);
+      const imgUrl = await UploadImage.UploadImage(image, filename);
   
       if (!imgUrl) {
         return res.status(500).send({ message: "Failed to upload product image" });
       }
   
-      const product = new Product({ ...req.body, imageUrl: imgUrl.Location });
+      const product = new Product({ ...req.body, imageUrl: imgUrl.Location, businessId: req.body.businessId });
   
       await product.save();
 

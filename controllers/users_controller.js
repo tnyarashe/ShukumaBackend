@@ -18,21 +18,21 @@ exports.getAllUsers = async (req, res)=>{
 
 exports.getOne = async (req, res)=>{
     try{
-        const {email} = req.body
+        const id = req.params.id
 
-        console.log(email)
+        console.log(id)
 
-        if(!email){
+        if(!id){
             return res.status(400).send("Enter email") 
         }
 
-        const user  = await User.findOne({email})
+        const user  = await User.findById(id.toString())
 
         if(!user){
-            return res.status(400).send({message: "Cannot get user with email : ", email}) 
+            return res.status(400).send({message: "Cannot get user with email : ", id}) 
         }
-
-        res.status(200).send({message: "Got user by email :", email})
+        
+        res.status(200).json({message: "Got user by email :", user})
 
     } catch(err){
          res.status(500).send({message: "Could not get the user", err})
@@ -42,8 +42,8 @@ exports.getOne = async (req, res)=>{
 exports.updateOne = async (req, res)=>{
     try{
         const id = req.params.id
+        console.log(id, req.body)
 
-        console.log(id)
         if(!id){
             return res.status(400).send("Enter email") 
         }
