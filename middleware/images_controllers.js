@@ -17,7 +17,7 @@ exports.UploadImage = async (fileImage) => {
 
     const s3 = new AWS.S3();
 
-    const fileContent = Buffer.from(fileImage.data, "Binary");
+    const fileContent = Buffer.from(fileImage.data, "binary");
 
     const params = {
         Bucket: process.env.AWS_BUCKET,

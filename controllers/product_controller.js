@@ -1,6 +1,10 @@
 const Product = require('../models/product_model'); 
 const UploadImage = require('../middleware/images_controllers')
+const  fileUpload = require('express-fileupload')
+const express = require('express')
+const app = express()
 
+app.use(fileUpload());
 
 exports.createProduct = async (req, res) => {
     // try {
@@ -32,10 +36,17 @@ exports.createProduct = async (req, res) => {
     try{
         const product = req.body;
         console.log(product)
-        const files = req.files;
-    
-        const uploadResult = await UploadImage.UploadImage(files.images)
-        imageUrl = uploadResult.Location
+
+        if (!req.files || !req.files.imgUrl) {
+            return res.status(400).send('No file uploaded.');
+          }
+
+        const fileImage = req.files.imgUrl;
+        const result = await UploadImage.UploadImage(fileImage);
+            
+        // const uploadResult = await UploadImage.UploadImage(files)
+           console.log(result)
+        imageUrl = result.Location
  
         product.imageUrl = imageUrl
         const productData = new Product(product)
