@@ -40,6 +40,7 @@ app.use('/v1/orders', orderRoutes)
 app.use('/v1/cart', cartRoutes)
 app.use('/v1/favourites', favsRoutes)
 
+
 app.get('/', (req, res)=>{
     res.send("Welcome to our API");
 })
