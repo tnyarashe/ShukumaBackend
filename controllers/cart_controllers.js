@@ -109,7 +109,7 @@ exports.clearCart = async (req, res) => {
 exports.getACart = async (req, res) => {
   try {
     userId = req.body
-    const cart = await Cart.find(userId).populate( { path: 'items.productId'});;
+    const cart = await Cart.find(userId).populate( { path: 'items.productId'});
 
     if (!cart) {
       return res.status(200).send({ message: "Cart not found" }); // Or send an empty cart object

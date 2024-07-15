@@ -87,13 +87,17 @@ exports.createOrder = async (req, res) => {
 
 exports.getOrderById = async (req,res) =>{
     try{
-        const { userId, cartId } = req.body;
+        // const userId = req.query.userId
+        const cartId = req.params.cartId
+        // console.log(userId)
     
-        const order = await Order.findOne({userId, cartId});
+        const order = await Order.findOne({cartId}).populate( { path: 'items.productId'}).populate({ path: 'userId', select: '-password' });
         if (!order) {
           res.status(404).json({ message: 'Order not found' });
           return;
         }
+        user = 
+        
         res.status(200).json(order);
     }catch{
         res.status(500).json({ error:"An error occured while fetching orders" });

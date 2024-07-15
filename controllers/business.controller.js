@@ -7,11 +7,11 @@ exports.create = async (req, res) => {
         res.status(400).send({ message: "Content can not be empty!" });
         return;
       }
-        const imgUrl  = await UploadImage.UploadImage(req.files.images)
-        console.log(imgUrl)
+        // const imgUrl  = await UploadImage.UploadImage(req.files.images)
+        
         const business = new Business({
         name: req.body.name,
-        img: imgUrl.Location,
+        // img: imgUrl.Location,
         email: req.body.email,
         tel_no: req.body.tel_no,
         address: req.body.address,

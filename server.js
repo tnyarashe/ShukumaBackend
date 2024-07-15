@@ -19,9 +19,12 @@ dotenv.config()
 
 app.use(cors())
 
+
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
-app.use(fileUpload())
+
+
+
 
 mongoose.connect(process.env.db_uri)
     .then(()=>{

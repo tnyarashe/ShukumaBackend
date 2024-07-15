@@ -2,6 +2,18 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); 
 
 const userSchema = new mongoose.Schema({
+  fname:{
+    type: String,
+    trim: true,
+    minlength: 3, 
+    maxlength: 20, 
+  },
+  lname:{
+    type: String,
+    trim: true,
+    minlength: 3, 
+    maxlength: 20, 
+  },
   username: {
     type: String,
     required: true,
@@ -30,14 +42,10 @@ const userSchema = new mongoose.Schema({
     default: ['user']
   },
   address: {
-    type: {
-      street: { type: String },
-      city: { type: String },
-      state: { type: String },
-      country: { type: String },
-      postalCode: { type: String }
-    },
-    
+    type: String  
+  },
+  contact_no: {
+    type: String
   },
   img: {
     type: String,
