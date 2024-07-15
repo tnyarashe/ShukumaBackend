@@ -7,32 +7,32 @@ const app = express()
 app.use(fileUpload());
 
 exports.createProduct = async (req, res) => {
-    try {
-      if (!req.body) {
-        return res.status(400).send({ message: "Content can not be empty!" });
-      }
+    // try {
+    //   if (!req.body) {
+    //     return res.status(400).send({ message: "Content can not be empty!" });
+    //   }
   
-      if (!req.files || !req.files.images) {
-        return res.status(400).send({ message: "Please upload a product image" });
-      }
+    //   if (!req.files || !req.files.images) {
+    //     return res.status(400).send({ message: "Please upload a product image" });
+    //   }
   
-      const filename = `${Date.now()}-${req.files.images.name}`;
+    //   const filename = `${Date.now()}-${req.files.images.name}`;
 
-      const imgUrl = await UploadImage.UploadImage(req.files.images, filename);
+    //   const imgUrl = await UploadImage.UploadImage(req.files.images, filename);
   
-      if (!imgUrl) {
-        return res.status(400).send({ message: "Failed to upload product image" });
-      }
+    //   if (!imgUrl) {
+    //     return res.status(400).send({ message: "Failed to upload product image" });
+    //   }
   
-      const product = new Product({ ...req.body, imageUrl: imgUrl.Location });
+    //   const product = new Product({ ...req.body, imageUrl: imgUrl.Location });
   
-      await product.save();
+    //   await product.save();
 
-    //   res.status(200).send({ message: "Product created successfully!", product });
-    // } catch (error) {
-    //   console.error(error);
-    //   res.status(400).send({ message: "Error creating product" }); 
-    // }
+    // //   res.status(200).send({ message: "Product created successfully!", product });
+    // // } catch (error) {
+    // //   console.error(error);
+    // //   res.status(400).send({ message: "Error creating product" }); 
+    // // }
     try{
         const product = req.body;
         console.log(product)
@@ -46,18 +46,18 @@ exports.createProduct = async (req, res) => {
             
         // const uploadResult = await UploadImage.UploadImage(files)
            console.log(result)
-        imageUrl = result.Location
+        const imageUrl = result.Location
  
-    //     product.imageUrl = imageUrl
-    //     const productData = new Product(product)
-    //     await productData.save();
+        product.imageUrl = imageUrl
+        const productData = new Product(product)
+        await productData.save();
 
-    //     res.status(200).json(product);
-    // }catch(error){
-    //     res.status(400).json({message: error.message})
-    // }
+        res.status(200).json(product);
+    }catch(error){
+        res.status(400).json({message: error.message})
+    }
         
-
+    
 
   };
 
