@@ -38,13 +38,13 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
-        const { password, username} = req.body
+        const { password, email} = req.body
 
-        if (!(username && password)) {
+        if (!(email && password)) {
             return res.status(400).send("All input is required");
         }
 
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ email });
 
         if (!user) {
             return res.status(404).send({ message: "User Not found." })

@@ -18,8 +18,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    minlength: 3, // Minimum username length for better security
-    maxlength: 20, // Reasonable maximum username length,
+    minlength: 3, 
+    maxlength: 20, 
     unique: true
   },
   email: {
@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 6 // Minimum password length for better security
+    minlength: 6 
   },
   roles: {
     type: [{
