@@ -7,7 +7,8 @@ exports.add =  async (req, res) => {
     const userId = req.body.userId;
     const itemId = req.body.itemId;
 
-    const existingFavorite = await Favorite.findOne({ userId, itemId });
+    const existingFavorite = await Favorite.findOne({ userId, itemId }).populate('itemId');
+    
     if (existingFavorite) {
 
       return res.status(400).send({ message: 'Item already favorited' });
