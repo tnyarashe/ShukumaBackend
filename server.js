@@ -51,46 +51,6 @@ app.get('/', (req, res)=>{
 })
 
 
-  
-  // const UploadImage = async (fileImage) => {
-  //   AWS.config.update({
-  //     accessKeyId: process.env.AWS_ACCESS_KEY,
-  //     secretAccessKey: process.env.AWS_SECRET_KEY,
-  //     region: process.env.AWS_REGION
-  //   });
-  
-  //   const s3 = new AWS.S3();
-  //   const fileContent = Buffer.from(fileImage.data, "binary");
-  
-  //   const params = {
-  //     Bucket: process.env.AWS_BUCKET,
-  //     Key: fileImage.name,
-  //     Body: fileContent
-  //   };
-  
-  //   return await s3.upload(params).promise();
-  // };
-  
-  // app.post('/upload', async (req, res) => {
-  //   try {
-  //     if (!req.files || !req.files.imgUrl) {
-  //       return res.status(400).send('No file uploaded.');
-  //     }
-  
-  //     const fileImage = req.files.imgUrl;
-  //     const result = await UploadImage(fileImage);
-  
-  //     res.status(200).send({
-  //       data: {
-  //         message: 'File uploaded successfully to S3',
-  //         s3Data: result
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.error('Error uploading file:', error);
-  //     res.status(500).send('Error uploading file.');
-  //   }
-  // });
 app.listen(process.env.PORT, ()=>{
     console.log("Listening @ port:", process.env.PORT)
 })

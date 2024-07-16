@@ -17,16 +17,18 @@ exports.signup = async (req, res) => {
         if (existingUser) {
             return res.status(400).send({ message: 'User already exists' });
         }
+        const pwd = await bcrypt.hash(password, 10)
 
         const user = new User({
             username,
             email,
-            password: await bcrypt.hash(password, 10),
+            password: pwd,
             roles: roles || ['user'],
             business,
             img
         })
 
+        console.log(user)
         await user.save()
 
         return res.status(200).send({ message: "User created successfully", user })
@@ -41,7 +43,7 @@ exports.login = async (req, res) => {
         const { password, email} = req.body
 
         if (!(email && password)) {
-            return res.status(400).send("All input is required");
+            return res.status(400).send({message: "All inputs are required"});
         }
 
         const user = await User.findOne({ email });
