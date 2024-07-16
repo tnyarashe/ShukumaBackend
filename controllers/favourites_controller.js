@@ -26,13 +26,18 @@ exports.add =  async (req, res) => {
 
 exports.remove =  async (req, res) => {
     try {
-      const userId = req.params.userId;
-      const itemId = req.body
-      
-      if(userId){
-        await Favorite.findOneAndDelete(itemId);
+      const id = req.params.id;
+
+      // const itemId = req.body.id
+      console.log(id)
+
+     
+        const faves = await Favorite.findOneAndDelete(id.toString());
+        await faves.save()
         res.status(200).send({ message: 'Favorite removed' });
-      }
+      
+
+      
       
     } catch (error) {
       console.error(error);
