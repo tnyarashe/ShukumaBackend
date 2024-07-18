@@ -34,6 +34,27 @@ exports.getAllDriverOrders = async (req, res) =>{
     };
 };
 
+exports.getAllBusinessOrders = async (req, res) =>{
+    try
+    {
+        const BusinessId = req.params.businessid
+
+        const orders = await Order.find();
+        const business_orders = [];
+
+        for(let order of orders){
+            if(BusinessId == order.deliveryDetails.BusinessId){
+                business_orders.push(order)
+            }
+        }
+        
+        res.status(200).json(business_orders);
+    }catch(error){
+        console.log(error)
+        res.status(500).json({error:error});
+    };
+};
+
 exports.createOrder = async (req, res) => {
   try {
     
