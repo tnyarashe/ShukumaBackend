@@ -89,9 +89,9 @@ exports.getOrderById = async (req,res) =>{
     try{
         // const userId = req.query.userId
         const cartId = req.params.cartId
-        // console.log(userId)
+        console.log(cartId)
     
-        const order = await Order.findOne({cartId}).populate( { path: 'items.productId'}).populate({ path: 'userId', select: '-password' });
+        const order = await Order.find({cartId: cartId.toString()}).populate({path: 'items.productId'}).populate({path: 'userId', select: "-password"})
         if (!order) {
           res.status(404).json({ message: 'Order not found' });
           return;
@@ -175,3 +175,13 @@ exports.deleteAllOrders = async (req,res) =>{
      }
     }
 }
+
+exports.fetchAllOrders = async (req, res) =>{
+    try{
+        
+        const orders = await Order.find();
+        res.status(200).json(orders);
+    }catch(error){
+        res.status(500).json({error:"An error occured while fetching orders"});
+    };
+};

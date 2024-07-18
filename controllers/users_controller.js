@@ -1,6 +1,9 @@
 const { default: mongoose } = require("mongoose");
 const User = require('../models/user_model'); 
 const { compareSync } = require("bcryptjs");
+const UploadImage = require('../middleware/images_controllers')
+
+
 
 exports.getAllUsers = async (req, res)=>{
     try{
@@ -41,14 +44,22 @@ exports.getOne = async (req, res)=>{
 
 exports.updateOne = async (req, res)=>{
     try{
-        const id = req.params.id
-        console.log(id, req.body)
+        const _id = req.params.id
+        const user = req.body
+        console.log(_id, req.body, req.files)
 
         if(!id){
             return res.status(400).send("Enter email") 
         }
-
-        const updatedUser  = await User.findByIdAndUpdate(id, req.body)
+        if (!req.files || !req.files.imgUrl) {
+            return res.status(400).send('No file uploaded.');
+          }
+        
+        const fileImage = req.files.imgUrl;
+        const result = await UploadImage.UploadImage(fileImage);
+        
+        user.img = result.Location
+        const updatedUser  = await User.findByIdAndUpdate(_id.toString(), user)
 
         if(!updatedUser){
             return res.status(404).send({message:"Cannot get user with email : ", email}) 

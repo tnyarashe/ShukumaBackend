@@ -44,8 +44,8 @@ exports.createProduct = async (req, res) => {
         const fileImage = req.files.imgUrl;
         const result = await UploadImage.UploadImage(fileImage);
             
-        // const uploadResult = await UploadImage.UploadImage(files)
-           console.log(result)
+        
+           
         const imageUrl = result.Location
  
         product.imageUrl = imageUrl

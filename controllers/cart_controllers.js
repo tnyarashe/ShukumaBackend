@@ -4,9 +4,9 @@ const Product = require('../models/product_model');
 
 exports.addToCart = async (req, res) => {
   try {
-    const { productId, quantity } = req.body;
+    const { productId, quantity, id } = req.body;
     
-    const id = "66865064ad57296a97884bc3"
+    
     
     if (!productId || !quantity || quantity < 1) {
       return res.status(400).send({ message: "Invalid product ID or quantity" });
@@ -78,7 +78,7 @@ exports.removeFromCart = async (req, res) => {
       return res.status(404).json({ message: 'Cart not found' });
     }
 
-     cart.items = cart.items.filter(item => item.productId._id.toString() !== productId);
+     cart.items = cart.items.filter(item => item._id.toString() !== productId);
     // cart.totalPrice = cart.items.reduce((total, item) => total + item.quantity * item.price, 0);
     console.log("ll",cart)
 
@@ -101,6 +101,20 @@ exports.clearCart = async (req, res) => {
 
     await cart.save();
     res.json(cart);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.clearCartAl = async (req, res) => {
+  try {
+    const cart = await Cart.deleteMany();
+    if (!cart) {
+      return res.status(404).json({ message: 'Cart not found' });
+    }
+
+
+    res.json({message:"Cleared all the  carts", cart});
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

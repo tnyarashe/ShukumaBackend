@@ -33,6 +33,7 @@ exports.remove =  async (req, res) => {
 
      
         const faves = await Favorite.findOneAndDelete(id.toString());
+
         await faves.save()
         res.status(200).send({ message: 'Favorite removed' });
       
@@ -55,3 +56,25 @@ exports.fetchAll = async (req, res) => {
       res.status(500).send({ message: 'Error retrieving favorites' });
     }
   }
+
+  exports.removeAll =  async (req, res) => {
+    try {
+      const id = req.params.id;
+
+      // const itemId = req.body.id
+      console.log(id)
+
+     
+        const faves = await Favorite.deleteMany();
+        
+        console.log(faves)
+        res.status(200).send({ message: 'Favorite removed' });
+      
+
+      
+      
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ message: 'Error removing favorite' });
+    }
+}
