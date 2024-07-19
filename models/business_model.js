@@ -28,14 +28,14 @@ var business_schema = mongoose.Schema(
                 type: String,
                 default: "https://www.thesait.org.za/global_graphics/default-store-350x350.jpg"
             },
-            // admins: [{
-            //     type: mongoose.Schema.Types.ObjectId,
-            //     ref: 'User' 
-            //   }],
-            //   users: [{
-            //     type: mongoose.Schema.Types.ObjectId,
-            //     ref: 'User' 
-            //   }]
+            admins: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User' 
+              }],
+              users: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User' 
+              }]
         }
     );
 
