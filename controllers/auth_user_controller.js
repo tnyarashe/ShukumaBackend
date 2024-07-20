@@ -1,8 +1,9 @@
 const { default: mongoose } = require("mongoose");
 const User = require('../models/user_model')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { request } = require("express")
+
+
 
 exports.signup = async (req, res) => {
     const { username, email, password, roles, business,img } = req.body
@@ -17,12 +18,14 @@ exports.signup = async (req, res) => {
         if (existingUser) {
             return res.status(400).send({ message: 'User already exists' });
         }
-        const pwd = await bcrypt.hash(password, 10)
 
+        // const salt = await bcrypt.genSalt(4);
+        // const pwd = await bcrypt.hash(password, salt)
+        console.log(password)
         const user = new User({
             username,
             email,
-            password: pwd,
+            password: password,
             roles: roles || ['user'],
             business,
             img
@@ -47,22 +50,30 @@ exports.login = async (req, res) => {
         }
 
         const user = await User.findOne({ email });
-
+         console.log(user)
         if (!user) {
             return res.status(404).send({ message: "User Not found." })
         }
+        // const hashPass = /^\$2y\$/.test(user.password) ? '$2a$' + user.password.slice(4) : user.password;
+        console.log(password, user.password)
 
-        const passwordIsValid = bcrypt.compare(
-            req.body.password,
-            user.password
-            
-        )
+        // const passwordIsValid = await bcrypt.compare(
+        //     password,
+        //     hashPass
+        // )
 
-        if (!passwordIsValid) {
+        // if (!passwordIsValid) {
+        //     return res.status(401).send({
+        //         accessToken: null,
+        //         message: "Invalid Login Credentials"
+        //     })
+        // }
+
+        if(password == user.password){
             return res.status(401).send({
-                accessToken: null,
-                message: "Invalid Login Credentials"
-            })
+                        accessToken: null,
+                        message: "Invalid Login Credentials"
+                    })
         }
 
         const access_token = jwt.sign(
