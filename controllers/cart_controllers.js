@@ -8,7 +8,7 @@ exports.addToCart = async (req, res) => {
     
     
     
-    if (!productId || !quantity || quantity < 1) {
+    if (!productId || !quantity) {
       return res.status(400).send({ message: "Invalid product ID or quantity" });
     }
     
@@ -73,6 +73,7 @@ exports.removeFromCart = async (req, res) => {
     // const cart = await Cart.findById(id);
     console.log(";;;",cart, userId, productId)
     
+   
 
     if (!cart) {
       return res.status(404).json({ message: 'Cart not found' });
