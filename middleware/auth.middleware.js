@@ -5,7 +5,7 @@ require('dotenv')
 
 let verifyToken = async (req, res, next)=>{
 
-    let token = req.headers["x-access-token"];
+    let token = req.headers["x_access_token"];
 
     if (!token) {
         return res.status(403).send({ message: "No token provided!" });
