@@ -32,14 +32,12 @@ exports.remove =  async (req, res) => {
       console.log(id)
 
      
-        const deletedFavorite = await Favorite.findOneAndDelete({_id: id})
+        const faves = await Favorite.findOneAndDelete(id.toString());
 
-        
-        if (deletedFavorite) {
-          res.status(200).send({ message: 'Favorite removed' });
-        } else {
-          res.status(404).send({ message: 'Favorite not found' });
-        }
+        await faves.save()
+        res.status(200).send({ message: 'Favorite removed' });
+      
+
       
       
     } catch (error) {
