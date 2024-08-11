@@ -19,6 +19,27 @@ const AWS = require('aws-sdk');
 dotenv.config()
 
 app.use(cors())
+
+const allowedOrigin = "https://shukuma-client.vercel.app/welcome";
+
+app.use((req, res, next) => {
+  if (req.origin === allowedOrigin) {
+    res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+  }
+
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, x-access-token"
+  );
+
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+
+  next();
+});
+
 app.use(fileUpload());
 
 
