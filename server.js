@@ -20,7 +20,7 @@ dotenv.config()
 
 app.use(cors())
 
-const allowedOrigin = "https://shukuma-client.vercel.app/welcome";
+const allowedOrigin = "https://shukuma-client.vercel.app/welcome; http://localhost:4200";
 
 app.use((req, res, next) => {
   if (req.origin === allowedOrigin) {
